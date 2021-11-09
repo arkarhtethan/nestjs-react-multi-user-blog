@@ -1,0 +1,15 @@
+POST:
+    tags
+    categories
+    createat
+    updatedat
+    author
+    published
+    content
+    title
+    image
+    summary
+comment:
+    title
+    content
+    author
