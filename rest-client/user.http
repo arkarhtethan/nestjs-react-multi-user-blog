@@ -1,0 +1,79 @@
+
+@hostname = localhost
+@port = 4000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@token = {{login.response.body.token}}
+
+### -----------------------------------------------------------
+
+# @name login
+POST http://{{host}}/user/login
+Content-Type: {{contentType}}
+
+{
+    "email":"arkarhtethan@gmail.com",
+    "password":"111111"
+}
+
+### -----------------------------------------------------------
+
+# @name register
+POST http://{{host}}/user/register
+Content-Type: {{contentType}}
+
+{
+    "email":"arkar@gmail.com",
+    "password":"111111",
+    "name":"Arkar Htet Han"
+}
+
+### -----------------------------------------------------------
+
+# @name update
+PATCH http://{{host}}/user/
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+{
+    "email":"arkarhtethan@gmail.com"
+}
+
+### -----------------------------------------------------------
+
+# @name changePassword
+PATCH http://{{host}}/user/change-password
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+{
+    "oldPassword":"111111",
+    "newPassword":"222222"
+}
+
+### -----------------------------------------------------------
+
+# @name profile
+GET http://{{host}}/user/profile
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name users
+GET http://{{host}}/user/
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name userById
+GET http://{{host}}/user/1
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name confirmEmail
+GET http://{{host}}/user/confirm/0cae0d63-3661-4d44-b47f-500c2b2447471636461936934
+Content-Type: {{contentType}}
