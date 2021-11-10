@@ -142,7 +142,33 @@ export class PostService {
     }
   }
 
-  publish () { }
+  async publish (
+    id: number,
+    user: User
+  ) {
+    try {
+      const post = await this.postRepository.findOne({ id }, { relations: ['user'] });
+      if (!post) {
+        throw new HttpException('Post not found.', HttpStatus.NOT_FOUND)
+      }
+      if (post.user.id !== user.id) {
+        throw new HttpException('Permission Denied.', HttpStatus.UNAUTHORIZED)
+      }
+      post.published = true;
+      await this.postRepository.save(post);
+      return {
+        ok: true,
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return {
+        ok: false,
+        error: "Can't publish post."
+      }
+    }
+  }
 
   async postsByCategory (categorySlug: string, { limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsByCategoryDto): Promise<GetAllPostsByCategoryOutput> {
     try {
@@ -266,7 +292,7 @@ export class PostService {
         throw new HttpException('Post not found.', HttpStatus.NOT_FOUND)
       }
       if (!((post.user.id === user.id) || (user.role === UserRole.Admin))) {
-        throw new HttpException("Permission denied.", HttpStatus.BAD_REQUEST);
+        throw new HttpException("Permission denied.", HttpStatus.UNAUTHORIZED);
       }
       await this.postRepository.delete(id);
       return {

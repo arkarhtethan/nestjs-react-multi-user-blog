@@ -39,9 +39,13 @@ export class PostController {
     return this.postService.myPost(user, getAllMyPostsDto)
   }
 
-  @Post('publish/:id')
-  publish (@Param('id') id: string) {
-    // TODO:
+  @Patch('publish/:id')
+  @Role(['User'])
+  publish (
+    @Param('id') id: string,
+    @AuthUser() user: User
+  ) {
+    return this.postService.publish(+id, user)
   }
 
   @Get('/category/:slug')
@@ -65,6 +69,7 @@ export class PostController {
   }
 
   @Patch(':id')
+  @Role(['User'])
   update (@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postService.update(+id, updatePostDto);
   }
