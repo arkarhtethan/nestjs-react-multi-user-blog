@@ -9,6 +9,7 @@ import { Category } from './entities/category.entity';
 import { Post } from './entities/post.entity';
 import { DEFAULT_POSTS_PER_PAGE, DEFAULT_PAGE_NUMBER } from '../common/constants'
 import { GetPostOutput } from './dto/get-post.dto';
+import { GetAllPostsByCategoryDto, GetAllPostsByCategoryOutput } from './dto/get-posts-by-category.dto';
 
 @Injectable()
 export class PostService {
@@ -61,46 +62,88 @@ export class PostService {
 
   async findAll ({ limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsDto): Promise<GetAllPostsOutput> {
     try {
+
       const totalPosts = await this.postRepository.count();
-
       const totalPages = Math.ceil(totalPosts / limit);
-
       if (pageNumber > totalPages) {
         throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
       }
-
       const posts = await this.postRepository.find({
         order: {
-          createdAt: "DESC"
+          id: "DESC"
         },
         take: limit,
         skip: (pageNumber * limit - limit),
+        relations: ['category', 'user']
       });
-
 
       return {
         data: {
-          posts,
           totalPages: totalPages,
           totalItems: totalPosts,
           limit: limit,
           currentPageItems: posts.length,
           currentPage: pageNumber,
+          posts,
         },
         ok: true,
       };
 
     } catch (error) {
+      console.log(error);
       if (error.name === "HttpException") {
         throw error;
       }
-      return { ok: false, error: "Cannot create post." }
+      return { ok: false, error: "Cannot get posts." }
     }
   }
 
   publish () { }
 
-  postByCategory () { }
+  async postsByCategory (categorySlug: string, { limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsByCategoryDto): Promise<GetAllPostsByCategoryOutput> {
+    try {
+      const category = await this.categoryRepository.findOne({ slug: categorySlug })
+
+      if (!category) {
+        throw new HttpException('Category not found', HttpStatus.NOT_FOUND)
+      }
+
+      const totalPosts = await this.postRepository.count({ where: { category } });
+      const totalPages = Math.ceil(totalPosts / limit);
+      if (pageNumber > totalPages) {
+        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+      }
+      const posts = await this.postRepository.find({
+        where: { category },
+        relations: ['category', 'user'],
+        take: limit,
+        order: {
+          id: "DESC"
+        },
+        skip: (pageNumber * limit - limit),
+      });
+
+      return {
+        ok: true,
+        data: {
+          limit,
+          totalPages,
+          totalItems: totalPosts,
+          currentPage: pageNumber,
+          currentPageItems: posts.length,
+          posts,
+        }
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return {
+        ok: false,
+        error: "Can't get posts by category."
+      }
+    }
+  }
 
   postByUser () { }
 

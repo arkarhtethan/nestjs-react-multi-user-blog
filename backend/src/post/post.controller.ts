@@ -7,6 +7,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Role } from 'src/auth/role.decorator';
 import { GetAllPostsDto } from './dto/get-posts.dto';
 import { GetPostOutput } from './dto/get-post.dto';
+import { GetAllPostsByCategoryDto } from './dto/get-posts-by-category.dto';
 
 @Controller('post')
 export class PostController {
@@ -32,8 +33,11 @@ export class PostController {
   }
 
   @Get('/category/:slug')
-  postByCategory (@Param('slug') slug: string) {
-
+  postByCategory (
+    @Param('slug') slug: string,
+    @Query() getAllPostsByCategoryDto: GetAllPostsByCategoryDto
+  ) {
+    return this.postService.postsByCategory(slug, getAllPostsByCategoryDto)
   }
 
   @Get('/user/:username')
