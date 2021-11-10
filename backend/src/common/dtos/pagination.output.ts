@@ -2,13 +2,9 @@ import { Type } from "class-transformer";
 import { IsNumber, IsOptional } from "class-validator";
 
 export class PaginationOutput {
-
     pages: number;
-
     currentPage: number;
-
     count: number;
-
     totalItems: number;
 }
 
