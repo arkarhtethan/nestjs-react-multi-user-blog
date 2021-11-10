@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { Role } from 'src/auth/role.decorator';
+import { GetAllPostsDto } from './dto/get-posts.dto';
 
 @Controller('post')
 export class PostController {
@@ -20,8 +21,8 @@ export class PostController {
   }
 
   @Get()
-  findAll () {
-    return this.postService.findAll();
+  findAll (@Query() getAllPostsDto: GetAllPostsDto) {
+    return this.postService.findAll(getAllPostsDto);
   }
 
   @Post('publish/:id')

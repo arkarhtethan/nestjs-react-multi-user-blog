@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
+import { GetAllPostsDto, GetAllPostsOutput } from './dto/get-posts.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Category } from './entities/category.entity';
 import { Post } from './entities/post.entity';
+import { DEFAULT_POSTS_PER_PAGE, DEFAULT_PAGE_NUMBER } from '../common/constants'
 
 @Injectable()
 export class PostService {
@@ -56,10 +58,41 @@ export class PostService {
     }
   }
 
-  findAll () {
+  async findAll ({ limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsDto): Promise<GetAllPostsOutput> {
     try {
+      const totalPosts = await this.postRepository.count();
+
+      const totalPages = Math.ceil(totalPosts / limit);
+
+      if (pageNumber > totalPages) {
+        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+      }
+
+      const posts = await this.postRepository.find({
+        order: {
+          createdAt: "DESC"
+        },
+        take: limit,
+        skip: (pageNumber * limit - limit),
+      });
+
+
+      return {
+        data: {
+          posts,
+          totalPages: totalPages,
+          totalItems: totalPosts,
+          limit: limit,
+          currentPageItems: posts.length,
+          currentPage: pageNumber,
+        },
+        ok: true,
+      };
 
     } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
       return { ok: false, error: "Cannot create post." }
     }
   }
