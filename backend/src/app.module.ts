@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from './jwt/jwt.module';
+import { Category } from './post/entities/category.entity';
+import { Post } from './post/entities/post.entity';
+import { PostModule } from './post/post.module';
 import { User } from './user/entities/user.entity';
 import { Verification } from './user/entities/verification.entity';
 import { UserModule } from './user/user.module';
@@ -32,10 +35,11 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Verification],
+      entities: [User, Verification, Post, Category],
       synchronize: true,
     }),
     UserModule,
+    PostModule,
     JwtModule.forRoot({ privateKey: process.env.PRIVATE_KEY }),
     AuthModule,
   ]
