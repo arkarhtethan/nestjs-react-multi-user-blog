@@ -8,6 +8,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Category } from './entities/category.entity';
 import { Post } from './entities/post.entity';
 import { DEFAULT_POSTS_PER_PAGE, DEFAULT_PAGE_NUMBER } from '../common/constants'
+import { GetPostOutput } from './dto/get-post.dto';
 
 @Injectable()
 export class PostService {
@@ -103,8 +104,25 @@ export class PostService {
 
   postByUser () { }
 
-  findOne (id: number) {
-    return `This action returns a #${id} post`;
+  async findOne (id: number): Promise<GetPostOutput> {
+    try {
+      const post = await this.postRepository.findOne({ id }, { relations: ['user', 'category'] })
+      if (!post) {
+        throw new HttpException('Post not found', HttpStatus.NOT_FOUND)
+      }
+      return {
+        ok: true,
+        post,
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return {
+        ok: false,
+        error: "Can't get post."
+      }
+    }
   }
 
   update (id: number, updatePostDto: UpdatePostDto) {

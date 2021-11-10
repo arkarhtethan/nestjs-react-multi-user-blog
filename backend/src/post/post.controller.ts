@@ -6,6 +6,7 @@ import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { Role } from 'src/auth/role.decorator';
 import { GetAllPostsDto } from './dto/get-posts.dto';
+import { GetPostOutput } from './dto/get-post.dto';
 
 @Controller('post')
 export class PostController {
@@ -41,7 +42,7 @@ export class PostController {
   }
 
   @Get(':id')
-  findOne (@Param('id') id: string) {
+  findOne (@Param('id') id: string): Promise<GetPostOutput> {
     return this.postService.findOne(+id);
   }
 
