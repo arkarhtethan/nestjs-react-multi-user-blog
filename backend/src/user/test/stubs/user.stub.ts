@@ -21,6 +21,7 @@ export const userModelStub = (): User => {
         "name": "Something updated",
         "email": "kokaung@gmail.com",
         verified: false,
+        posts: [],
         "role": UserRole.User,
         password: "",
         createUsername: async () => { },
