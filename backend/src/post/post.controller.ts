@@ -10,6 +10,7 @@ import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto } from './dto/get-posts-by-user.dto';
 import { GetAllMyPostsDto } from './dto/my-post.dto';
+import { DeletePostDto } from './dto/delete-post.dto';
 
 @Controller('post')
 export class PostController {
@@ -69,7 +70,11 @@ export class PostController {
   }
 
   @Delete(':id')
-  remove (@Param('id') id: string) {
-    return this.postService.remove(+id);
+  @Role(['User', 'Admin'])
+  remove (
+    @AuthUser() user: User,
+    @Param('id') id: string
+  ): Promise<DeletePostDto> {
+    return this.postService.remove(+id, user);
   }
 }

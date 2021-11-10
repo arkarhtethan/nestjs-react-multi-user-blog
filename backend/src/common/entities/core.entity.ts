@@ -1,10 +1,11 @@
-import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Transform, Type } from 'class-transformer';
+import { CreateDateColumn, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Type } from 'class-transformer';
 import { IsNumber } from "class-validator";
 
 export class CoreEntity {
 
     @PrimaryGeneratedColumn()
+    @Index()
     @Type(type => Number)
     @IsNumber()
     id: number;

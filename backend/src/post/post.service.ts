@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/user/entities/user.entity';
+import { User, UserRole } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
 import { GetAllPostsDto, GetAllPostsOutput } from './dto/get-posts.dto';
@@ -12,6 +12,7 @@ import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto, GetAllPostsByCategoryOutput } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto, GetAllPostsByUserOutput } from './dto/get-posts-by-user.dto';
 import { GetAllMyPostsDto, GetAllMyPostsOutput } from './dto/my-post.dto';
+import { DeletePostDto } from './dto/delete-post.dto';
 
 @Injectable()
 export class PostService {
@@ -254,11 +255,32 @@ export class PostService {
     }
   }
 
-  update (id: number, updatePostDto: UpdatePostDto) {
+  async update (id: number, updatePostDto: UpdatePostDto) {
     return `This action updates a #${id} post`;
   }
 
-  remove (id: number) {
-    return `This action removes a #${id} post`;
+  async remove (id: number, user: User): Promise<DeletePostDto> {
+    try {
+      const post = await this.postRepository.findOne({ id }, { relations: ['user'] });
+      if (!post) {
+        throw new HttpException('Post not found.', HttpStatus.NOT_FOUND)
+      }
+      if (!((post.user.id === user.id) || (user.role === UserRole.Admin))) {
+        throw new HttpException("Permission denied.", HttpStatus.BAD_REQUEST);
+      }
+      await this.postRepository.delete(id);
+      return {
+        ok: true
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      console.log(error);
+      return {
+        ok: false,
+        error: "Can't delet post."
+      }
+    }
   }
 }
