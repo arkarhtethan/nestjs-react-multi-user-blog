@@ -2,8 +2,9 @@ import { InternalServerErrorException } from "@nestjs/common";
 import { Type } from "class-transformer";
 import { IsBoolean, IsEmail, IsEnum, IsString, MinLength } from "class-validator";
 import { CoreEntity } from "../../common/entities/core.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity } from "typeorm"
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm"
 import * as bcrypt from 'bcryptjs';
+import { Post } from "src/post/entities/post.entity";
 
 export enum UserRole {
     User = 'User',
@@ -42,6 +43,9 @@ export class User extends CoreEntity {
     @Type(type => Boolean)
     @IsBoolean()
     verified: boolean;
+
+    @OneToMany(() => Post, post => post.user)
+    posts: Post[];
 
     @BeforeInsert()
     async createUsername () {
