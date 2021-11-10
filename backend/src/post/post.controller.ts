@@ -9,6 +9,7 @@ import { GetAllPostsDto } from './dto/get-posts.dto';
 import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto } from './dto/get-posts-by-user.dto';
+import { GetAllMyPostsDto } from './dto/my-post.dto';
 
 @Controller('post')
 export class PostController {
@@ -28,9 +29,18 @@ export class PostController {
     return this.postService.findAll(getAllPostsDto);
   }
 
+  @Role(['User',])
+  @Get('mypost')
+  myPost (
+    @AuthUser() user: User,
+    @Query() getAllMyPostsDto: GetAllMyPostsDto,
+  ) {
+    return this.postService.myPost(user, getAllMyPostsDto)
+  }
+
   @Post('publish/:id')
   publish (@Param('id') id: string) {
-
+    // TODO:
   }
 
   @Get('/category/:slug')

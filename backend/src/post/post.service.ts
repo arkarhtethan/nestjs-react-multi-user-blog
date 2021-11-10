@@ -11,6 +11,7 @@ import { DEFAULT_POSTS_PER_PAGE, DEFAULT_PAGE_NUMBER } from '../common/constants
 import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto, GetAllPostsByCategoryOutput } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto, GetAllPostsByUserOutput } from './dto/get-posts-by-user.dto';
+import { GetAllMyPostsDto, GetAllMyPostsOutput } from './dto/my-post.dto';
 
 @Injectable()
 export class PostService {
@@ -78,6 +79,45 @@ export class PostService {
         take: limit,
         skip: (pageNumber * limit - limit),
         relations: ['category', 'user']
+      });
+
+      return {
+        data: {
+          totalPages: totalPages,
+          totalItems: totalPosts,
+          limit: limit,
+          currentPageItems: posts.length,
+          currentPage: pageNumber,
+          posts,
+        },
+        ok: true,
+      };
+
+    } catch (error) {
+      console.log(error);
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return { ok: false, error: "Cannot get posts." }
+    }
+  }
+
+  async myPost (user: User, { limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllMyPostsDto): Promise<GetAllMyPostsOutput> {
+    try {
+
+      const totalPosts = await this.postRepository.count({ user });
+      const totalPages = Math.ceil(totalPosts / limit);
+      if (pageNumber > totalPages) {
+        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+      }
+      const posts = await this.postRepository.find({
+        order: {
+          id: "DESC"
+        },
+        take: limit,
+        skip: (pageNumber * limit - limit),
+        relations: ['category', 'user'],
+        where: { user }
       });
 
       return {
