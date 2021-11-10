@@ -11,6 +11,7 @@ import { GetAllPostsByCategoryDto } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto } from './dto/get-posts-by-user.dto';
 import { GetAllMyPostsDto } from './dto/my-post.dto';
 import { DeletePostDto } from './dto/delete-post.dto';
+import { CategoryListOutput } from './dto/category-list.dto';
 
 @Controller('post')
 export class PostController {
@@ -46,6 +47,11 @@ export class PostController {
     @AuthUser() user: User
   ) {
     return this.postService.publish(+id, user)
+  }
+
+  @Get('/category/list')
+  categoryList (): Promise<CategoryListOutput> {
+    return this.postService.categoryList();
   }
 
   @Get('/category/:slug')

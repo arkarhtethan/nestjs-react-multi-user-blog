@@ -13,6 +13,7 @@ import { GetAllPostsByCategoryDto, GetAllPostsByCategoryOutput } from './dto/get
 import { GetAllPostsByUserDto, GetAllPostsByUserOutput } from './dto/get-posts-by-user.dto';
 import { GetAllMyPostsDto, GetAllMyPostsOutput } from './dto/my-post.dto';
 import { DeletePostDto } from './dto/delete-post.dto';
+import { CategoryListOutput } from './dto/category-list.dto';
 
 @Injectable()
 export class PostService {
@@ -164,6 +165,24 @@ export class PostService {
       return {
         ok: false,
         error: "Can't publish post."
+      }
+    }
+  }
+
+  async categoryList (): Promise<CategoryListOutput> {
+    try {
+      const categories = await this.categoryRepository.find();
+      return {
+        ok: true,
+        categories,
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return {
+        ok: false,
+        error: "Can't get all categories."
       }
     }
   }
