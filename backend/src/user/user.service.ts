@@ -35,7 +35,6 @@ export class UserService {
         ok: true,
       }
     } catch (error) {
-      console.log(error);
       if (error.code && error.code === '23505') {
         throw new HttpException(`User with this email already exists.`, HttpStatus.BAD_REQUEST)
       }
@@ -69,7 +68,6 @@ export class UserService {
         token,
       }
     } catch (error) {
-      console.log(error)
       if (error.status === 400) { throw error; }
       return {
         ok: false,
@@ -228,7 +226,6 @@ export class UserService {
   }
 
   async verifyEmail ({ code }: VerifyEmailDto): Promise<VerifyEmailOutput> {
-    console.log(code)
     try {
 
       const verification = await this.verificationRepository.findOne({ code }, { relations: ['user'] })

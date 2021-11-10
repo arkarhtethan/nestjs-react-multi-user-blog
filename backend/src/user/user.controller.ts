@@ -72,7 +72,6 @@ export class UserController {
 
   @Get('/confirm/:code')
   verifyEmail (@Param() verifyEmailDto): Promise<VerifyEmailOutput> {
-    console.log(verifyEmailDto)
     return this.userService.verifyEmail(verifyEmailDto)
   }
 }

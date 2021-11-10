@@ -111,7 +111,6 @@ describe('UserService', () => {
     it('should fail on error when creating user.', async () => {
       userRepository.findOne.mockResolvedValueOnce(null);
       loginOutput = await service.login(loginDto);
-      console.log(loginOutput);
       expect(userRepository.findOne).toHaveBeenCalledTimes(1);
       expect(userRepository.findOne).toHaveBeenCalledWith(loginDto);
       expect(loginOutput).toThrowError();

@@ -2,7 +2,7 @@ import { Type } from "class-transformer";
 import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 import { CoreEntity } from "src/common/entities/core.entity";
 import { User } from "src/user/entities/user.entity";
-import { BeforeInsert, Column, Entity, ManyToOne } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne } from "typeorm";
 import { Category } from "./category.entity";
 
 @Entity()
@@ -50,7 +50,10 @@ export class Post extends CoreEntity {
     category: Category;
 
     @BeforeInsert()
+    @BeforeUpdate()
     generateSlug () {
-        this.slug = this.title.toLowerCase().replace(/ /g, '');
+        if (this.title) {
+            this.slug = this.title.toLowerCase().replace(/ /g, '') + "-" + Date.now();
+        }
     }
 }

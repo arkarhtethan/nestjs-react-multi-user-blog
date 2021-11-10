@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
+import { UpdatePostDto, UpdatePostOutput } from './dto/update-post.dto';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { Role } from 'src/auth/role.decorator';
@@ -70,8 +70,12 @@ export class PostController {
 
   @Patch(':id')
   @Role(['User'])
-  update (@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(+id, updatePostDto);
+  update (
+    @AuthUser() user: User,
+    @Param('id') id: string,
+    @Body() updatePostDto: UpdatePostDto
+  ): Promise<UpdatePostOutput> {
+    return this.postService.update(+id, updatePostDto, user);
   }
 
   @Delete(':id')

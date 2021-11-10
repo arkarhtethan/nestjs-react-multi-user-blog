@@ -4,7 +4,7 @@ import { User, UserRole } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
 import { GetAllPostsDto, GetAllPostsOutput } from './dto/get-posts.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
+import { UpdatePostDto, UpdatePostOutput } from './dto/update-post.dto';
 import { Category } from './entities/category.entity';
 import { Post } from './entities/post.entity';
 import { DEFAULT_POSTS_PER_PAGE, DEFAULT_PAGE_NUMBER } from '../common/constants'
@@ -95,7 +95,6 @@ export class PostService {
       };
 
     } catch (error) {
-      console.log(error);
       if (error.name === "HttpException") {
         throw error;
       }
@@ -134,7 +133,6 @@ export class PostService {
       };
 
     } catch (error) {
-      console.log(error);
       if (error.name === "HttpException") {
         throw error;
       }
@@ -281,8 +279,39 @@ export class PostService {
     }
   }
 
-  async update (id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update (id: number, updatePostDto: UpdatePostDto, user: User): Promise<UpdatePostOutput> {
+    try {
+      const post = await this.postRepository.findOne({ id }, { relations: ['user'] })
+      if (!post) {
+        throw new HttpException('Post not found', HttpStatus.NOT_FOUND)
+      }
+      if (post.user.id !== user.id) {
+        throw new HttpException('Permission Denied', HttpStatus.UNAUTHORIZED)
+      }
+      const { category } = updatePostDto;
+      let categoryObject;
+      if (category) {
+        categoryObject = await this.getOrCreateCategory(category);
+      }
+      await this.postRepository.save(this.postRepository.create([
+        {
+          id,
+          ...updatePostDto,
+          ...(category && { category: categoryObject })
+        }
+      ]))
+      return {
+        ok: true,
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return {
+        ok: false,
+        error: "Can't update post."
+      }
+    }
   }
 
   async remove (id: number, user: User): Promise<DeletePostDto> {
@@ -302,7 +331,6 @@ export class PostService {
       if (error.name === "HttpException") {
         throw error;
       }
-      console.log(error);
       return {
         ok: false,
         error: "Can't delet post."
