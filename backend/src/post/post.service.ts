@@ -10,6 +10,7 @@ import { Post } from './entities/post.entity';
 import { DEFAULT_POSTS_PER_PAGE, DEFAULT_PAGE_NUMBER } from '../common/constants'
 import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto, GetAllPostsByCategoryOutput } from './dto/get-posts-by-category.dto';
+import { GetAllPostsByUserDto, GetAllPostsByUserOutput } from './dto/get-posts-by-user.dto';
 
 @Injectable()
 export class PostService {
@@ -19,6 +20,8 @@ export class PostService {
     private readonly postRepository: Repository<Post>,
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) { }
 
   private async getOrCreateCategory (name: string) {
@@ -145,7 +148,50 @@ export class PostService {
     }
   }
 
-  postByUser () { }
+  async postByUser (username: string, { limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsByUserDto): Promise<GetAllPostsByUserOutput> {
+    try {
+      const user = await this.userRepository.findOne({ username })
+
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+      }
+
+      const totalPosts = await this.postRepository.count({ where: { user: user } });
+      const totalPages = Math.ceil(totalPosts / limit);
+      if (pageNumber > totalPages) {
+        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+      }
+      const posts = await this.postRepository.find({
+        where: { user: user },
+        relations: ['category', 'user'],
+        take: limit,
+        order: {
+          id: "DESC"
+        },
+        skip: (pageNumber * limit - limit),
+      });
+
+      return {
+        ok: true,
+        data: {
+          limit,
+          totalPages,
+          totalItems: totalPosts,
+          currentPage: pageNumber,
+          currentPageItems: posts.length,
+          posts,
+        }
+      }
+    } catch (error) {
+      if (error.name === "HttpException") {
+        throw error;
+      }
+      return {
+        ok: false,
+        error: "Can't get posts by category."
+      }
+    }
+  }
 
   async findOne (id: number): Promise<GetPostOutput> {
     try {
