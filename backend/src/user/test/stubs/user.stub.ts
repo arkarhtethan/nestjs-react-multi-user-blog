@@ -8,6 +8,7 @@ export const getUserStub = () => {
         "username": "kaungmyat1636194685444",
         "name": "Something updated",
         "email": "kokaung@gmail.com",
+        "password": "1212",
         "role": UserRole.User,
     }
 }
