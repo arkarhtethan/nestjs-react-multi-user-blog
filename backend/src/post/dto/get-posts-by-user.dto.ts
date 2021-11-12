@@ -1,5 +1,5 @@
-import { CoreOutput } from "src/common/dtos/core.output";
-import { PaginationInput, PaginationOutput } from "src/common/dtos/pagination.output";
+import { CoreOutput } from "../../common/dtos/core.output";
+import { PaginationInput, PaginationOutput } from "../../common/dtos/pagination.output";
 import { Post } from "../entities/post.entity";
 
 class PostsByUserOutput extends PaginationOutput {

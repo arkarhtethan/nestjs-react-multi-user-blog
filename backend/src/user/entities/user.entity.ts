@@ -4,7 +4,7 @@ import { IsBoolean, IsEmail, IsEnum, IsString, MinLength } from "class-validator
 import { CoreEntity } from "../../common/entities/core.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm"
 import * as bcrypt from 'bcryptjs';
-import { Post } from "src/post/entities/post.entity";
+import { Post } from "../../post/entities/post.entity";
 
 export enum UserRole {
     User = 'User',

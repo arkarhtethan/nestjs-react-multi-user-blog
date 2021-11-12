@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { PostService } from './post.service';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
 import { UpdatePostDto, UpdatePostOutput } from './dto/update-post.dto';
-import { AuthUser } from 'src/auth/auth-user.decorator';
-import { User } from 'src/user/entities/user.entity';
-import { Role } from 'src/auth/role.decorator';
+import { AuthUser } from '../auth/auth-user.decorator';
+import { User } from '../user/entities/user.entity';
+import { Role } from '../auth/role.decorator';
 import { GetAllPostsDto } from './dto/get-posts.dto';
 import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto } from './dto/get-posts-by-category.dto';

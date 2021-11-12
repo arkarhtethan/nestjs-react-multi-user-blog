@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserRole } from 'src/user/entities/user.entity';
+import { User, UserRole } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto, CreatePostOutput } from './dto/create-post.dto';
 import { GetAllPostsDto, GetAllPostsOutput } from './dto/get-posts.dto';
@@ -68,7 +68,6 @@ export class PostService {
 
   async findAll ({ limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsDto): Promise<GetAllPostsOutput> {
     try {
-
       const totalPosts = await this.postRepository.count();
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {

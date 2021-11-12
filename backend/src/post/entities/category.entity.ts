@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import { IsString, IsNotEmpty } from "class-validator";
-import { CoreEntity } from "src/common/entities/core.entity";
+import { CoreEntity } from "../../common/entities/core.entity";
 import { BeforeInsert, Column, Entity, Index, OneToMany } from "typeorm";
 import { Post } from "./post.entity";
 

@@ -3,9 +3,9 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { JwtModule } from 'src/jwt/jwt.module';
+import { JwtModule } from '../jwt/jwt.module';
 import { Verification } from './entities/verification.entity';
-import { JwtService } from 'src/jwt/jwt.service';
+import { JwtService } from '../jwt/jwt.service';
 
 @Module({
   imports: [

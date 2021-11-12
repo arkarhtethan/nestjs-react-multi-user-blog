@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
 import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
-import { CoreEntity } from "src/common/entities/core.entity";
-import { User } from "src/user/entities/user.entity";
+import { CoreEntity } from "../../common/entities/core.entity";
+import { User } from "../../user/entities/user.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne } from "typeorm";
 import { Category } from "./category.entity";
 
