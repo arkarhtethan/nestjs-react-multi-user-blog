@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '../jwt/jwt.service';
 import { Repository } from 'typeorm';
@@ -51,13 +51,11 @@ export class UserService {
       if (!user) {
         throw new HttpException('Invalid email / password.', HttpStatus.BAD_REQUEST)
       }
-
       if (!user.verified) {
         throw new HttpException('You need to verify your email first.', HttpStatus.BAD_REQUEST)
       }
-
       if (!await user.checkPassword(password)) {
-        throw new HttpException('Invalid email / password.', HttpStatus.BAD_REQUEST)
+        throw new HttpException('Incorrect Password', HttpStatus.BAD_REQUEST)
       }
       // generate token
       const loggedInUser = await this.usersRepository.findOne({ email });
@@ -102,7 +100,7 @@ export class UserService {
         user
       }
     } catch (error) {
-      if (error.name && error.name === "HttpException") {
+      if (error && error.name && error.name === "HttpException") {
         throw error;
       }
       return {
@@ -155,7 +153,7 @@ export class UserService {
       const { id } = authUser;
       let user = await this.usersRepository.findOne({ id }, { select: ['password'] });
       if (!user) {
-        throw new HttpException('User not found.', HttpStatus.BAD_REQUEST)
+        throw new HttpException('User not found.', HttpStatus.NOT_FOUND)
       }
       const isPasswordCorrect = await user.checkPassword(oldPassword);
       if (!isPasswordCorrect) {
