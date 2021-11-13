@@ -10,6 +10,9 @@ import { PostModule } from './post/post.module';
 import { User } from './user/entities/user.entity';
 import { Verification } from './user/entities/verification.entity';
 import { UserModule } from './user/user.module';
+import { SearchModule } from './search/search.module';
+import { CommentModule } from './comment/comment.module';
+import { Comment } from './comment/entities/comment.entity';
 
 @Module({
   imports: [
@@ -26,6 +29,8 @@ import { UserModule } from './user/user.module';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
+        ELASTIC_NODE: Joi.string().required(),
+        ELASTICSEARCH_INDEX: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -35,13 +40,15 @@ import { UserModule } from './user/user.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Verification, Post, Category],
+      entities: [User, Verification, Post, Category, Comment],
       synchronize: true,
     }),
     UserModule,
     PostModule,
     JwtModule.forRoot({ privateKey: process.env.PRIVATE_KEY }),
     AuthModule,
+    CommentModule,
+    // SearchModule,
   ]
 })
 export class AppModule { }
