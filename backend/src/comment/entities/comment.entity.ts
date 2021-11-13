@@ -7,7 +7,7 @@ import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 @Entity()
 export class Comment extends CoreEntity {
 
-    @ManyToOne(type => User, user => user.comments, { onDelete: "CASCADE" })
+    @ManyToOne(type => User, user => user.comments, { onDelete: "CASCADE", eager: true },)
     user: User;
 
     @IsString()
@@ -15,11 +15,11 @@ export class Comment extends CoreEntity {
     @Column({ type: String, nullable: false })
     text: string;
 
-    @ManyToOne(type => Post, post => post.comments, { onDelete: "CASCADE" })
+    @ManyToOne(type => Post, post => post.comments, { onDelete: "CASCADE", })
     post: Post;
 
-    @ManyToOne(type => Comment, comment => comment.children)
-    parent: Comment;
+    @ManyToOne(type => Comment, comment => comment.children, { nullable: true, onDelete: "CASCADE" })
+    parent?: Comment;
 
     @OneToMany(type => Comment, comment => comment.parent)
     children: Comment[];
