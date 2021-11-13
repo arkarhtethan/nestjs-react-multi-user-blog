@@ -10,7 +10,7 @@ import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto } from './dto/get-posts-by-user.dto';
 import { GetAllMyPostsDto } from './dto/my-post.dto';
-import { DeletePostDto } from './dto/delete-post.dto';
+import { DeletePostOutput } from './dto/delete-post.dto';
 import { CategoryListOutput } from './dto/category-list.dto';
 
 @Controller('post')
@@ -89,7 +89,7 @@ export class PostController {
   remove (
     @AuthUser() user: User,
     @Param('id') id: string
-  ): Promise<DeletePostDto> {
+  ): Promise<DeletePostOutput> {
     return this.postService.remove(+id, user);
   }
 }
