@@ -5,6 +5,7 @@ import { CoreEntity } from "../../common/entities/core.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm"
 import * as bcrypt from 'bcryptjs';
 import { Post } from "../../post/entities/post.entity";
+import { Comment } from "src/comment/entities/comment.entity";
 
 export enum UserRole {
     User = 'User',
@@ -46,6 +47,9 @@ export class User extends CoreEntity {
 
     @OneToMany(() => Post, post => post.user)
     posts: Post[];
+
+    @OneToMany(() => Comment, comment => comment.user)
+    comments: Comment[];
 
     @BeforeInsert()
     async createUsername () {
