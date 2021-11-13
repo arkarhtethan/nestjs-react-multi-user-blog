@@ -12,8 +12,9 @@ import { GetPostOutput } from './dto/get-post.dto';
 import { GetAllPostsByCategoryDto, GetAllPostsByCategoryOutput } from './dto/get-posts-by-category.dto';
 import { GetAllPostsByUserDto, GetAllPostsByUserOutput } from './dto/get-posts-by-user.dto';
 import { GetAllMyPostsDto, GetAllMyPostsOutput } from './dto/my-post.dto';
-import { DeletePostDto } from './dto/delete-post.dto';
+import { DeletePostOutput } from './dto/delete-post.dto';
 import { CategoryListOutput } from './dto/category-list.dto';
+import { CoreOutput } from 'src/common/dtos/core.output';
 
 @Injectable()
 export class PostService {
@@ -104,7 +105,6 @@ export class PostService {
 
   async myPost (user: User, { limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllMyPostsDto): Promise<GetAllMyPostsOutput> {
     try {
-
       const totalPosts = await this.postRepository.count({ user });
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {
@@ -143,7 +143,7 @@ export class PostService {
   async publish (
     id: number,
     user: User
-  ) {
+  ): Promise<CoreOutput> {
     try {
       const post = await this.postRepository.findOne({ id }, { relations: ['user'] });
       if (!post) {
@@ -176,9 +176,6 @@ export class PostService {
         categories,
       }
     } catch (error) {
-      if (error.name === "HttpException") {
-        throw error;
-      }
       return {
         ok: false,
         error: "Can't get all categories."
@@ -332,14 +329,14 @@ export class PostService {
     }
   }
 
-  async remove (id: number, user: User): Promise<DeletePostDto> {
+  async remove (id: number, user: User): Promise<DeletePostOutput> {
     try {
       const post = await this.postRepository.findOne({ id }, { relations: ['user'] });
       if (!post) {
         throw new HttpException('Post not found.', HttpStatus.NOT_FOUND)
       }
       if (!((post.user.id === user.id) || (user.role === UserRole.Admin))) {
-        throw new HttpException("Permission denied.", HttpStatus.UNAUTHORIZED);
+        throw new HttpException("Permission Denied.", HttpStatus.UNAUTHORIZED);
       }
       await this.postRepository.delete(id);
       return {
@@ -351,7 +348,7 @@ export class PostService {
       }
       return {
         ok: false,
-        error: "Can't delet post."
+        error: "Can't remove post."
       }
     }
   }
