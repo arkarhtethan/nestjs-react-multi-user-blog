@@ -10,7 +10,7 @@ export const getUserStub = () => {
         "email": "kokaung@gmail.com",
         "password": "1212",
         "role": UserRole.User,
-    }
+    } as User;
 }
 
 export const userModelStub = (): User => {
@@ -28,5 +28,6 @@ export const userModelStub = (): User => {
         createUsername: async () => { },
         checkPassword: async () => { return true; },
         hashPassword: async () => { },
+        comments: []
     }
 }
