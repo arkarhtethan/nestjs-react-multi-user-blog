@@ -16,8 +16,6 @@ export class CommentService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
     @InjectRepository(Comment)
     private readonly commentRepository: Repository<Comment>,
   ) { }
@@ -55,7 +53,7 @@ export class CommentService {
     try {
       const post = await this.postRepository.findOne({ id: postId })
       if (!post) {
-        throw new HttpException('Post not found', HttpStatus.NOT_FOUND)
+        throw new HttpException('Post not found.', HttpStatus.NOT_FOUND)
       }
       const comments = await this.commentRepository.find({ where: { post, parent: null }, relations: ['parent', 'children'] })
       return {
@@ -67,7 +65,8 @@ export class CommentService {
         throw error;
       }
       return {
-        ok: false
+        ok: false,
+        error: "Cannt get comments for given post."
       }
     }
   }
@@ -88,6 +87,7 @@ export class CommentService {
       }
       return {
         ok: false,
+        error: "Cannot get comment for given id."
       }
     }
   }
@@ -116,6 +116,7 @@ export class CommentService {
       }
       return {
         ok: false,
+        error: "Cannot update comment."
       }
     }
   }
@@ -139,6 +140,7 @@ export class CommentService {
       }
       return {
         ok: false,
+        error: "Cannot remove comment."
       }
     }
   }
