@@ -351,6 +351,7 @@ describe('UserService', () => {
           ...getUserStub(),
           verified: false,
           posts: [],
+          comments: [],
           createUsername: async () => { },
           hashPassword: async () => { },
           checkPassword: jest.fn().mockResolvedValueOnce(true)
@@ -375,6 +376,7 @@ describe('UserService', () => {
           ...getUserStub(),
           verified: false,
           posts: [],
+          comments: [],
           createUsername: async () => { },
           hashPassword: async () => { },
           checkPassword: jest.fn().mockResolvedValueOnce(false)
@@ -399,6 +401,7 @@ describe('UserService', () => {
           ...getUserStub(),
           verified: false,
           posts: [],
+          comments: [],
           createUsername: async () => { },
           hashPassword: async () => { },
           checkPassword: jest.fn().mockResolvedValueOnce(true)
