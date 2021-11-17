@@ -193,9 +193,6 @@ export class PostService {
 
       const totalPosts = await this.postRepository.count({ where: { category } });
       const totalPages = Math.ceil(totalPosts / limit);
-      if (pageNumber > totalPages) {
-        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
-      }
       const posts = await this.postRepository.find({
         where: { category },
         relations: ['category', 'user'],
@@ -211,6 +208,7 @@ export class PostService {
         data: {
           limit,
           totalPages,
+          category,
           totalItems: totalPosts,
           currentPage: pageNumber,
           currentPageItems: posts.length,
@@ -256,6 +254,7 @@ export class PostService {
         data: {
           limit,
           totalPages,
+          user,
           totalItems: totalPosts,
           currentPage: pageNumber,
           currentPageItems: posts.length,
