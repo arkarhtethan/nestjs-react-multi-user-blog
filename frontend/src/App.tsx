@@ -4,11 +4,14 @@ import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router";
 import { Footer } from "./components/footer/footer";
 import { Header } from "./components/header/header";
-import { Spinner } from "./components/loader";
+import { Spinner } from "./shared/loader";
 import { Login, Register } from "./containers/auth";
 import { myProfileService } from "./service/auth.service";
 import { getToken } from "./service/localstorage.service";
 import { login } from "./store/auth.slice";
+import { PostDetail, Posts } from "./containers/post";
+import PostsByUsername from "./containers/post/postsByUsername";
+import PostsByCategory from "./containers/post/postsByCategory";
 
 
 function App () {
@@ -44,13 +47,15 @@ function App () {
     </div>);
   }
 
-
   return (
     <div className="h-screen flex flex-col">
       <Header />
       <div className="flex-grow bg-gray-100">
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<Posts />} />
+          <Route path="/user/:slug" element={<PostsByUsername />} />
+          <Route path="/category/:slug" element={<PostsByCategory />} />
+          <Route path="/:id" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
