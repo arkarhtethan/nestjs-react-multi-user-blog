@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { ISEOHeaderProps } from "../../types/misc.type";
+import { ISEOHeaderProps } from "../../types/component.type";
 
 export default function SEOHeader ({ title, description }: ISEOHeaderProps) {
     return (
