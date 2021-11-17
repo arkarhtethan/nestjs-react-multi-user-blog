@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const client = new QueryClient();
 
@@ -18,6 +19,7 @@ ReactDOM.render(
           <App />
         </Provider>
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
