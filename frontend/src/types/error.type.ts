@@ -4,4 +4,5 @@ export interface IFormError {
 }
 export interface IErrorMessage {
     message: string;
+    classes?: string;
 }
