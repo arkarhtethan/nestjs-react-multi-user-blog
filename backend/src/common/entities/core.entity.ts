@@ -10,7 +10,7 @@ export class CoreEntity {
     @IsNumber()
     id: number;
 
-    @CreateDateColumn({ select: false })
+    @CreateDateColumn({ select: true })
     @Type(type => Date)
     createdAt: Date;
 
