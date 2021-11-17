@@ -1,4 +1,4 @@
-import { ISubmitButtonProps } from '../../types/misc.type'
+import { ISubmitButtonProps } from '../../types/component.type'
 import { Spinner } from '../loader'
 import SolidButton from './ solidButton'
 

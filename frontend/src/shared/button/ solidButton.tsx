@@ -1,4 +1,4 @@
-import { ISolidButtonProps } from "../../types/misc.type";
+import { ISolidButtonProps } from "../../types/component.type";
 
 export default function SolidButton ({ onClick, text, buttonType = "button", classes }: ISolidButtonProps) {
     return (
