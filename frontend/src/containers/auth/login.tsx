@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
-import FormError, { ErrorMessage } from '../../components/error/formError';
-import { SubmitButton } from '../../components/button';
+import FormError, { ErrorMessage } from '../../shared/error/formError';
+import { SubmitButton } from '../../shared/button';
 import { useMutation } from 'react-query';
 import { getErrorMessage } from '../../utils/getErrorMessage';
 import SEOHeader from '../../components/header/SEOHeader';
