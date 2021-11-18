@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
-import Categories from "../../components/post/categories";
+import { Categories } from "../../components/post";
 import { postsById } from "../../service/post.service";
 import LoadingCmp from "../../shared/loader/loadingCmp";
 import NotFound from "../../shared/notFound";

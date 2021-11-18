@@ -5,7 +5,7 @@ import FormError, { ErrorMessage } from '../../shared/error/formError';
 import { SubmitButton } from '../../shared/button';
 import { useMutation } from 'react-query';
 import { getErrorMessage } from '../../utils/getErrorMessage';
-import SEOHeader from '../../components/header/SEOHeader';
+import { SEOHeader } from '../../components/header';
 import { loginService } from '../../service/auth.service';
 import { saveToken } from '../../service/localstorage.service';
 import { useDispatch } from 'react-redux';

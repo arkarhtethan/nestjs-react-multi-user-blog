@@ -4,6 +4,7 @@ import PostList from "../../components/post/postList";
 import { postByCategory } from "../../service/post.service";
 import { ICategory, IPost } from "../../types/post.type";
 import { useParams } from "react-router";
+import { SEOHeader } from "../../components/header";
 
 export default function PostsByCategory () {
     const [posts, setPosts] = useState<IPost[]>([]);
@@ -29,6 +30,9 @@ export default function PostsByCategory () {
     })
 
     return (
-        <PostList totalItems={totalItems} isLoading={isLoading} isError={isError} pageNumber={pageNumber} setPageNumber={setPageNumber} postPerPage={postPerPage} posts={posts} category={category} />
+        <>
+            <SEOHeader title={`${category?.name}`} description={`Posts for ${category?.name}`} />
+            <PostList totalItems={totalItems} isLoading={isLoading} isError={isError} pageNumber={pageNumber} setPageNumber={setPageNumber} postPerPage={postPerPage} posts={posts} category={category} />
+        </>
     )
 }

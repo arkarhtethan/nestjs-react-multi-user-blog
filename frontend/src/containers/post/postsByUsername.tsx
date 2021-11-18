@@ -5,6 +5,7 @@ import { postByUser } from "../../service/post.service";
 import { IPost } from "../../types/post.type";
 import { useParams } from "react-router";
 import { IUser } from "../../types/user.type";
+import { SEOHeader } from "../../components/header";
 
 export default function PostsByUsername () {
     const [posts, setPosts] = useState<IPost[]>([]);
@@ -30,6 +31,9 @@ export default function PostsByUsername () {
     })
 
     return (
-        <PostList totalItems={totalItems} isLoading={isLoading} isError={isError} pageNumber={pageNumber} setPageNumber={setPageNumber} postPerPage={postPerPage} posts={posts} user={user} />
+        <>
+            <SEOHeader title={`${user?.name}`} description={`Posts by ${user?.name}`} />
+            <PostList totalItems={totalItems} isLoading={isLoading} isError={isError} pageNumber={pageNumber} setPageNumber={setPageNumber} postPerPage={postPerPage} posts={posts} user={user} />
+        </>
     )
 }

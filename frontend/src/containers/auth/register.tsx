@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import FormError, { ErrorMessage } from '../../shared/error/formError';
-import SEOHeader from '../../components/header/SEOHeader';
+import { SEOHeader } from '../../components/header';
 import { SubmitButton } from '../../shared/button';
 import { registerService } from '../../service/auth.service';
 import { getErrorMessage } from '../../utils/getErrorMessage';

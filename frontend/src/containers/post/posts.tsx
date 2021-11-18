@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { SEOHeader } from "../../components/header";
 import PostList from "../../components/post/postList";
 import { getPosts } from "../../service/post.service";
 import { IPost } from "../../types/post.type";
@@ -24,6 +25,9 @@ export default function Posts () {
         }
     })
     return (
-        <PostList totalItems={totalItems} isLoading={isLoading} isError={isError} pageNumber={pageNumber} setPageNumber={setPageNumber} postPerPage={postPerPage} posts={posts} />
+        <>
+            <SEOHeader title="Post List" description={"Explore Posts at km blog."} />
+            <PostList totalItems={totalItems} isLoading={isLoading} isError={isError} pageNumber={pageNumber} setPageNumber={setPageNumber} postPerPage={postPerPage} posts={posts} />
+        </>
     )
 }
