@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useMediaQuery } from "react-responsive";
 import { removeToken, removeUser } from '../../service/localstorage.service';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +15,6 @@ export const Header = () => {
     const isDesktop = useMediaQuery({
         query: '(min-width: 1024px)'
     });
-
-    const location = useLocation();
-    const { pathname } = location;
 
     useEffect(() => {
         if (!user && openDropdown) {
@@ -46,8 +43,6 @@ export const Header = () => {
                 {openDropdown && <div className={`origin-top-right absolute ${isDesktop ? 'right-0' : 'left-0'} mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
                     <div className="py-1" role="none">
                         <Link onClick={() => setOpenDropdown(false)} to="/profile" className="text-gray-700 block px-4 py-2 text-sm">Profile</Link>
-                        <Link onClick={() => setOpenDropdown(false)} to="/" className="text-gray-700 block px-4 py-2 text-sm">Support</Link>
-                        <Link onClick={() => setOpenDropdown(false)} to="/" className="text-gray-700 block px-4 py-2 text-sm">License</Link>
                         <button onClick={logoutHandler} className="text-gray-700 block w-full text-left px-4 py-2 text-sm">
                             Sign out
                         </button>
@@ -56,8 +51,6 @@ export const Header = () => {
             </div>
         </>
     }
-
-
 
     return (
         <div className="py-4 shadow-xl">
@@ -69,10 +62,13 @@ export const Header = () => {
                                 <Link to="/" className={"text-xl font-bold"}>KM Blog</Link>
                             </li>
                             <li className="py-2">
-                                <Link className={`${pathname === '/about' && 'text-blue-500'} hover:text-blue-500`} to="/about">About</Link>
+                                <NavLink className={({ isActive }) => isActive ? "text-blue-500" : ` hover:text-blue-500`} to="/">Home</NavLink>
                             </li>
                             <li className="py-2">
-                                <Link className={`${pathname === '/contact' && 'text-blue-500'} hover:text-blue-500`} to="/contact">Contact</Link>
+                                <NavLink className={({ isActive }) => isActive ? "text-blue-500" : ` hover:text-blue-500`} to="/about">About</NavLink>
+                            </li>
+                            <li className="py-2">
+                                <NavLink className={({ isActive }) => isActive ? "text-blue-500" : ` hover:text-blue-500`} to="/contact">Contact</NavLink>
                             </li>
                         </ul>
                     </div>
@@ -94,7 +90,9 @@ export const Header = () => {
 
             <div className={`lg:hidden flex justify-between items-center px-3`}>
                 <h3 className="font-extrabold text-2xl tracking-widest">
-                    KVlog
+                    <Link to="/">
+                        KVlog
+                    </Link>
                 </h3>
                 <button className="outline-none mobile-menu-button" onClick={() => setOpen(!open)}>
                     <svg className=" w-6 h-6 text-gray-500 hover:text-gray-500 "
@@ -117,13 +115,17 @@ export const Header = () => {
                     <li><Link to="/about" className="block text-sm px-2 py-4  hover:text-black">About</Link></li>
                     <li><Link to="/contact" className="block text-sm px-2 py-4 hover:text-black hover:font-bold">Contact</Link></li>
                     <li className="px-2 py-4 text-sm">
-                        <Link to="/login">
-                            Login
-                        </Link>
-                        <span className='mx-3'>/</span>
-                        <Link to="/register">
-                            Register
-                        </Link>
+                        {user?.name ? <Dropdown /> :
+                            <>
+                                <Link to="/login">
+                                    Login
+                                </Link>
+                                <span className='mx-3'>/</span>
+                                <Link to="/register">
+                                    Register
+                                </Link>
+                            </>
+                        }
                     </li>
                 </ul>
             </div>
