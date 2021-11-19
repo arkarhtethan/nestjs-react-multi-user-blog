@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useQuery } from "react-query"
 import { categoryList } from "../../service/post.service"
-import { ErrorMessage } from "../../shared/error/formError";
+import { ErrorMessage } from "../../shared/error/FormError";
 import { Spinner } from "../../shared/loader";
 import { ICategory } from "../../types/post.type";
-import CategoryItem from "./categoryItem";
+import CategoryItem from "./CategoryItem";
 
 export default function Categories () {
     const [categories, setCategories] = useState<ICategory[]>([]);

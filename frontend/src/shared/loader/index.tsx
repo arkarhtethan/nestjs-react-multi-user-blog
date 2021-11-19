@@ -16,4 +16,4 @@ export const Spinner = ({ color = "#fff", height = 20 }: ISpinnerProps) => {
 
 export const DotLoader = () => <Loader type="ThreeDots" color="#000" height={80} width={80} />
 
-export { default as LoadingCompoent } from "./loadingCmp";
+export { default as LoadingCompoent } from "./LoadingCmp";

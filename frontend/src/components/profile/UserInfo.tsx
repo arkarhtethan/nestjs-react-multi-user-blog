@@ -1,7 +1,7 @@
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useSelector } from "react-redux"
-import LoadingCmp from "../../shared/loader/loadingCmp"
+import LoadingCmp from "../../shared/loader/LoadingCmp"
 import { RootState } from "../../store"
 
 export default function UserInfo () {

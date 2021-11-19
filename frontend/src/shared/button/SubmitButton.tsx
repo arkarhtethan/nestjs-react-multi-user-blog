@@ -1,6 +1,6 @@
 import { ISubmitButtonProps } from '../../types/component.type'
 import { Spinner } from '../loader'
-import SolidButton from './ solidButton'
+import SolidButton from './SolidButton'
 
 
 export default function SubmitButton ({ loading, isValid, buttonText }: ISubmitButtonProps) {

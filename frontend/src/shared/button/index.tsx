@@ -1,2 +1,2 @@
-export { default as SolidButton } from "./ solidButton";
-export { default as SubmitButton } from "./submitButton";
+export { default as SolidButton } from "./SolidButton";
+export { default as SubmitButton } from "./SubmitButton";

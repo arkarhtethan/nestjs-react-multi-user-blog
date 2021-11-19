@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import CategoryItem from "../components/post/categoryItem";
+import CategoryItem from "../components/post/CategoryItem";
 import { categoryList } from "../service/post.service";
 import { ICategory } from "../types/post.type";
 
