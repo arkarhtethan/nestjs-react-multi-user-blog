@@ -1,1 +1,6 @@
 export { default as Sidebar } from "./sidebar"
+export { default as Dashboard } from "./Dashboard"
+export { default as ProfilePostList } from "./PostList"
+export { default as PostForm } from "./PostForm"
+export { default as EditProfile } from "./EditProfile"
+export { default as AccountDelete } from "./AccountDelete"

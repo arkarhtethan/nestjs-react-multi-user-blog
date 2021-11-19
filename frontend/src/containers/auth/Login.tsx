@@ -40,6 +40,8 @@ export const Login = () => {
         return (email && email.length !== 0) && (password && password.length !== 0) && Object.entries(errors).length === 0;
     }
 
+    console.log(getValues());
+
     const handleChange = () => {
         setErrorMessage(null);
     }

@@ -8,7 +8,7 @@ import { format } from "timeago.js";
 import { Categories } from "../../components/post";
 import { postsById } from "../../service/post.service";
 import LoadingCmp from "../../shared/loader/loadingCmp";
-import NotFound from "../../shared/notFound";
+import NotFound from "../../shared/NotFound";
 import { IPost } from "../../types/post.type";
 
 export default function PostDetail () {
