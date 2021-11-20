@@ -6,8 +6,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
 import { Categories } from "../../components/post";
-import { postsById } from "../../service/post.service";
-import LoadingCmp from "../../shared/loader/loadingCmp";
+import { postsByIdService } from "../../service/post.service";
+import LoadingCmp from "../../shared/loader/LoadingCmp";
 import NotFound from "../../shared/NotFound";
 import { IPost } from "../../types/post.type";
 
@@ -15,7 +15,7 @@ export default function PostDetail () {
     const { id } = useParams();
     const [post, setPost] = useState<IPost>();
 
-    const { isLoading, isError } = useQuery(['posts-details', id], () => postsById(id), {
+    const { isLoading, isError } = useQuery(['posts-details', id], () => postsByIdService(id), {
         refetchOnWindowFocus: false,
         onSuccess: (response) => {
             if (response.ok) {

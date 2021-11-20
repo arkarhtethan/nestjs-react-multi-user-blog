@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { SEOHeader } from "../../components/header";
-import PostList from "../../components/post/postList";
-import { getPosts } from "../../service/post.service";
+import PostList from "../../components/post/PostList";
+import { getPostsService } from "../../service/post.service";
 import { IPost } from "../../types/post.type";
 
 export default function Posts () {
@@ -11,7 +11,7 @@ export default function Posts () {
     const [postPerPage, setPostPerPage] = useState(10);
     const [totalItems, setTotalItems] = useState<number>(0);
 
-    const { isError, isLoading } = useQuery(['posts', pageNumber], () => getPosts({ pageNumber }), {
+    const { isError, isLoading } = useQuery(['posts', pageNumber], () => getPostsService({ pageNumber }), {
         refetchOnWindowFocus: false,
         keepPreviousData: true,
         onSuccess: (response: any) => {

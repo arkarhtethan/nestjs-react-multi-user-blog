@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import CategoryItem from "../components/post/CategoryItem";
-import { categoryList } from "../service/post.service";
+import { categoryListService } from "../service/post.service";
 import { ICategory } from "../types/post.type";
 
 interface INotFound {
@@ -12,7 +12,7 @@ export default function NotFound ({ message, title }: INotFound) {
 
     const [categories, setCategories] = useState<ICategory[]>([]);
 
-    useQuery(['categories'], categoryList, {
+    useQuery(['categories'], categoryListService, {
         refetchOnWindowFocus: false,
         onSuccess: (response) => {
             setCategories(response.categories)

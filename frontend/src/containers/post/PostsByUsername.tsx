@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query"
-import PostList from "../../components/post/postList";
-import { postByUser } from "../../service/post.service";
+import PostList from "../../components/post/PostList";
+import { postByUserService } from "../../service/post.service";
 import { IPost } from "../../types/post.type";
 import { useParams } from "react-router";
 import { IUser } from "../../types/user.type";
@@ -15,7 +15,7 @@ export default function PostsByUsername () {
     const [user, setUser] = useState<IUser>();
     const { slug: username } = useParams();
 
-    const { isError, isLoading } = useQuery(['posts-user', username, pageNumber], () => postByUser(username, { pageNumber }), {
+    const { isError, isLoading } = useQuery(['posts-user', username, pageNumber], () => postByUserService(username, { pageNumber }), {
         refetchOnWindowFocus: false,
         keepPreviousData: true,
         onSuccess: (response) => {

@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router";
-import { Footer } from "./components/footer/footer";
-import { Header } from "./components/header/header";
+import { Footer } from "./components/footer/Footer";
+import { Header } from "./components/header";
 import { Spinner } from "./shared/loader";
-import { Login, Register } from "./containers/auth";
+import { Login, Profile, Register } from "./containers/auth";
 import { myProfileService } from "./service/auth.service";
 import { getToken } from "./service/localstorage.service";
 import { login } from "./store/auth.slice";
 import { PostDetail, Posts } from "./containers/post";
-import PostsByUsername from "./containers/post/postsByUsername";
-import PostsByCategory from "./containers/post/postsByCategory";
+import { PostsByUser } from "./containers/post";
+import { PostsByCategory } from "./containers/post";
 
 
 function App () {
@@ -53,11 +53,13 @@ function App () {
       <div className="flex-grow bg-gray-100">
         <Routes>
           <Route path="/" element={<Posts />} />
-          <Route path="/user/:slug" element={<PostsByUsername />} />
+          <Route path="/user/:slug" element={<PostsByUser />} />
           <Route path="/category/:slug" element={<PostsByCategory />} />
-          <Route path="/:id" element={<PostDetail />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:slug" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/:id" element={<PostDetail />} />
         </Routes>
       </div>
       <Footer />

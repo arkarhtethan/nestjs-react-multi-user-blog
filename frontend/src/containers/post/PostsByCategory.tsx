@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query"
-import PostList from "../../components/post/postList";
-import { postByCategory } from "../../service/post.service";
+import PostList from "../../components/post/PostList";
+import { postByCategoryService } from "../../service/post.service";
 import { ICategory, IPost } from "../../types/post.type";
 import { useParams } from "react-router";
 import { SEOHeader } from "../../components/header";
@@ -14,7 +14,7 @@ export default function PostsByCategory () {
     const { slug: categoryName } = useParams();
     const [category, setCategory] = useState<ICategory>();
 
-    const { isError, isLoading } = useQuery(['posts-category', categoryName, pageNumber], () => postByCategory(categoryName, { pageNumber }), {
+    const { isError, isLoading } = useQuery(['posts-category', categoryName, pageNumber], () => postByCategoryService(categoryName, { pageNumber }), {
         refetchOnWindowFocus: false,
         keepPreviousData: true,
         onSuccess: (response) => {

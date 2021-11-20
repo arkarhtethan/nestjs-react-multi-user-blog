@@ -1,10 +1,10 @@
 import Pagination from "react-js-pagination";
-import { ErrorMessage } from "../../shared/error/formError";
+import { ErrorMessage } from "../../shared/error/FormError";
 import { Spinner } from "../../shared/loader";
 import { ICategory, IPost } from "../../types/post.type";
 import { IUser } from "../../types/user.type";
-import Categories from "./categories";
-import PostItem from "./postItem";
+import Categories from "./Categories";
+import PostItem from "./PostItem";
 
 interface IPostListProps {
     setPageNumber: (val: number) => void;
