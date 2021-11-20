@@ -56,7 +56,7 @@ export class UserController {
   }
 
   @Patch('change-password')
-  @Role(['User'])
+  @Role(['User', 'Admin'])
   changePassword (
     @Body() changePasswordDto: ChangePasswordDto,
     @AuthUser() user: User
