@@ -31,7 +31,7 @@ export class PostController {
     return this.postService.findAll(getAllPostsDto);
   }
 
-  @Role(['User',])
+  @Role(['User', 'Admin'])
   @Get('mypost')
   myPost (
     @AuthUser() user: User,
