@@ -1,6 +1,6 @@
 import { InternalServerErrorException } from "@nestjs/common";
 import { Type } from "class-transformer";
-import { IsBoolean, IsEmail, IsEnum, IsString, MinLength } from "class-validator";
+import { IsBoolean, IsEmail, IsEnum, IsOptional, IsString, MinLength } from "class-validator";
 import { CoreEntity } from "../../common/entities/core.entity";
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from "typeorm"
 import * as bcrypt from 'bcryptjs';
@@ -44,6 +44,12 @@ export class User extends CoreEntity {
     @Type(type => Boolean)
     @IsBoolean()
     verified: boolean;
+
+    @Column({ nullable: true })
+    @IsString()
+    @IsOptional()
+    @Type(() => String)
+    bio: string;
 
     @OneToMany(() => Post, post => post.user)
     posts: Post[];

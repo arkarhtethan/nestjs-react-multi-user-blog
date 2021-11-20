@@ -9,5 +9,6 @@ export interface IUser {
     username: string,
     name: string;
     email: string;
+    bio: string;
     role: UserType;
 }

@@ -110,7 +110,7 @@ export class UserService {
     }
   }
 
-  async update ({ name, email }: UpdateUserDto, authUser: User): Promise<UpdateUserOutput> {
+  async update ({ name, email,bio }: UpdateUserDto, authUser: User): Promise<UpdateUserOutput> {
     try {
       const { id } = authUser;
       let user = await this.usersRepository.findOne({ id });
@@ -127,6 +127,10 @@ export class UserService {
 
       if (name) {
         user.name = name;
+      }
+
+      if (bio) {
+        user.bio = bio;
       }
 
       await this.usersRepository.save(user);

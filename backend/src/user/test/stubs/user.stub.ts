@@ -13,7 +13,7 @@ export const getUserStub = () => {
     } as User;
 }
 
-export const userModelStub = (): User => {
+export const userModelStub = () => {
     return {
         "id": 2,
         "createdAt": new Date("2021-11-06T10:31:25.444Z"),
@@ -28,6 +28,7 @@ export const userModelStub = (): User => {
         createUsername: async () => { },
         checkPassword: async () => { return true; },
         hashPassword: async () => { },
-        comments: []
-    }
+        comments: [],
+        bio: "",
+    } as User;
 }
