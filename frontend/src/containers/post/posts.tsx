@@ -16,7 +16,6 @@ export default function Posts () {
         keepPreviousData: true,
         onSuccess: (response: any) => {
             if (response?.ok) {
-                console.log(response?.data)
                 setPageNumber(response?.data.currentPage)
                 setPostPerPage(response?.data.limit)
                 setTotalItems(response?.data.totalItems)

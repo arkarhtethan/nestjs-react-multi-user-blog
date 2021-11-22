@@ -19,7 +19,6 @@ export default function PostsByCategory () {
         keepPreviousData: true,
         onSuccess: (response) => {
             if (response.ok) {
-                console.log(response.data)
                 setPageNumber(response.data.currentPage)
                 setPostPerPage(response.data.limit)
                 setTotalItems(response.data.totalItems)
