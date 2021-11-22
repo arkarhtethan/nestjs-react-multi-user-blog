@@ -2,6 +2,7 @@ import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { SolidButton } from "../../shared/button";
 import Modal from "../../shared/Modal";
+import { SEOHeader } from "../header";
 
 export default function AccountDelete () {
 
@@ -16,6 +17,7 @@ export default function AccountDelete () {
     const [showModal, setShowModal] = useState(false);
     return (
         <div id="accountPanel" className="px-10 pt-5 text-gray-900">
+            <SEOHeader title="Account" description="Your account details." />
             <h3 className="text-2xl mb-4 font-bold">Account Settings</h3>
             <hr className="border-black" />
             <div className="mt-8">

@@ -9,6 +9,7 @@ import { SubmitButton } from "../../shared/button";
 import FormError, { ErrorMessage } from "../../shared/error/FormError";
 import { logout } from "../../store/auth.slice";
 import { getErrorMessage } from "../../utils/getErrorMessage";
+import { SEOHeader } from "../header";
 
 export default function ChangePassword () {
 
@@ -50,6 +51,7 @@ export default function ChangePassword () {
 
     return (
         <div id="accountPanel" className="px-10 pt-5 text-gray-900">
+            <SEOHeader title="Change Password" description="Change your password." />
             <h3 className="text-2xl mb-4 font-bold">Change Password</h3>
             <hr className="border-black" />
             <p className="mb-3 mt-6 text-gray-500">
