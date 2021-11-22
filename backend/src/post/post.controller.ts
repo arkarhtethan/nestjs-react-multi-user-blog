@@ -18,7 +18,7 @@ export class PostController {
   constructor(private readonly postService: PostService) { }
 
   @Post()
-  @Role(['User'])
+  @Role(['User', 'Admin'])
   create (
     @Body() createPostDto: CreatePostDto,
     @AuthUser() user: User,
@@ -41,7 +41,7 @@ export class PostController {
   }
 
   @Patch('publish/:id')
-  @Role(['User'])
+  @Role(['User', 'Admin'])
   publish (
     @Param('id') id: string,
     @AuthUser() user: User
