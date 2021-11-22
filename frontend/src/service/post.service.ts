@@ -11,7 +11,7 @@ export function postsByIdService (postId: string | undefined) {
 }
 
 export function myPostsService ({ pageNumber = 1 }: IPostListInput) {
-    return axios.get(`/${PREFIX}/mypost`).then(res => res.data);
+    return axios.get(`/${PREFIX}/mypost/?pageNumber=${pageNumber}`).then(res => res.data);
 }
 
 export function categoryListService () {
@@ -30,7 +30,7 @@ export function createPostService (data: IPostCreateBody) {
     return axios.post(`/${PREFIX}/`, data).then(res => res.data);
 }
 
-export function publishPostService (postId: string) {
+export function publishPostService (postId: number) {
     return axios.patch(`/${PREFIX}/publish/${postId}`).then(res => res.data);
 }
 
@@ -38,6 +38,6 @@ export function updatePostService (postId: string, data: IPostUpdateBody) {
     return axios.patch(`/${PREFIX}/category/${postId}`, data).then(res => res.data);
 }
 
-export function deletePostService (postId: string) {
+export function deletePostService (postId: number) {
     return axios.delete(`/${PREFIX}/${postId}`).then(res => res.data);
 }
