@@ -116,7 +116,7 @@ export class PostService {
         },
         take: limit,
         skip: (pageNumber * limit - limit),
-        relations: ['category', 'user'],
+        relations: ['category'],
         where: { user }
       });
 
