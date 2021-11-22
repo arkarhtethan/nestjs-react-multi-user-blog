@@ -18,7 +18,6 @@ export default function Sidebar () {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('changing screen');
         if (!isDesktop && showNav) {
             setShowNav(false);
         } else if (isDesktop) {
