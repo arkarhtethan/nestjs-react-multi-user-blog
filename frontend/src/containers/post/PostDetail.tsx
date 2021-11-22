@@ -10,6 +10,7 @@ import { postsByIdService } from "../../service/post.service";
 import LoadingCmp from "../../shared/loader/LoadingCmp";
 import NotFound from "../../shared/NotFound";
 import { IPost } from "../../types/post.type";
+import renderHTML from 'react-render-html';
 
 export default function PostDetail () {
     const { id } = useParams();
@@ -36,7 +37,6 @@ export default function PostDetail () {
     if (isError) {
         return <NotFound title="Oops! Something went wrong." message="Sorry!! Can't get post data at the moment." />
     }
-
     return (
         <div className="flex w-3/4 mx-auto space-x-2 my-12">
             <div className="w-3/4 px-4 bg-white shadow-lg text-justify pb-10">
@@ -57,7 +57,7 @@ export default function PostDetail () {
                     </div>
                 </div>
                 <div>
-                    {post.content}
+                    {renderHTML(post.content)}
                 </div>
             </div>
             <div className="w-1/4">
