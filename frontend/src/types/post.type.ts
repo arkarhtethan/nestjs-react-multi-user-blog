@@ -11,7 +11,7 @@ export interface IPostCreateBody {
     title: string;
     content: string;
     image: string;
-    published: string;
+    published: boolean;
     summary: string;
     category: string;
 }
