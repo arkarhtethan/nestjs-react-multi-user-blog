@@ -69,7 +69,7 @@ export class PostService {
 
   async findAll ({ limit = DEFAULT_POSTS_PER_PAGE, pageNumber = DEFAULT_PAGE_NUMBER }: GetAllPostsDto): Promise<GetAllPostsOutput> {
     try {
-      const totalPosts = await this.postRepository.count();
+      const totalPosts = await this.postRepository.count({ where: { published: true } });
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {
         throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
@@ -80,7 +80,10 @@ export class PostService {
         },
         take: limit,
         skip: (pageNumber * limit - limit),
-        relations: ['category', 'user']
+        relations: ['category', 'user'],
+        where: {
+          published: true,
+        }
       });
 
       return {
@@ -191,10 +194,10 @@ export class PostService {
         throw new HttpException('Category not found', HttpStatus.NOT_FOUND)
       }
 
-      const totalPosts = await this.postRepository.count({ where: { category } });
+      const totalPosts = await this.postRepository.count({ where: { category, published: true } });
       const totalPages = Math.ceil(totalPosts / limit);
       const posts = await this.postRepository.find({
-        where: { category },
+        where: { category, published: true },
         relations: ['category', 'user'],
         take: limit,
         order: {
@@ -234,13 +237,13 @@ export class PostService {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND)
       }
 
-      const totalPosts = await this.postRepository.count({ where: { user: user } });
+      const totalPosts = await this.postRepository.count({ where: { user: user, published: true } });
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {
         throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
       }
       const posts = await this.postRepository.find({
-        where: { user: user },
+        where: { user, published: true },
         relations: ['category', 'user'],
         take: limit,
         order: {
