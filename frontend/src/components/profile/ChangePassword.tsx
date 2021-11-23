@@ -59,7 +59,7 @@ export default function ChangePassword () {
                 Changing your password will log you out.<br />
                 You will need to login in again.
             </p>
-            <div className="w-1/3">
+            <div className="lg:w-1/3">
                 <div className={`mb-2 ${errorMessage ? 'block' : 'hidden'} duration-300 transition-all`}>
                     {(errorMessage) && <FormError onClick={() => setErrorMessage(null)} message={errorMessage} />}
                 </div>

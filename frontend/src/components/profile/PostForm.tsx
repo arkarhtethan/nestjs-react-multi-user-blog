@@ -6,7 +6,6 @@ import { ErrorMessage } from "../../shared/error/FormError";
 import { getErrorMessage } from "../../utils/getErrorMessage";
 import { SEOHeader } from "../header";
 import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { createPostService, postsByIdService, updatePostService } from "../../service/post.service";
 import Message from "../../shared/Message";
@@ -141,7 +140,7 @@ export default function PostForm () {
     }
 
     return (
-        <div id="accountPanel" className="px-10 pt-5 text-gray-900">
+        <div id="accountPanel" className="lg:px-10 px-3 pt-5 text-gray-900">
             <SEOHeader title="Edit Profile" description="Edit your profile." />
             <h3 className="text-2xl mb-4 font-bold">{isEditing ? "Update" : "Create New"} Post</h3>
             <hr className="border-black" />
@@ -149,8 +148,8 @@ export default function PostForm () {
                 {errorMessage && <div className="mb-2"><Message variant="red" message={errorMessage} onClick={() => setErrorMessage(null)} /></div>}
                 {successMessage && <div className="mb-2"><Message variant="green" message={successMessage} onClick={() => setSuccessMessage(null)} /></div>}
                 <form action="" className="flex flex-col pb-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex space-x-3 ">
-                        <div className="w-1/2">
+                    <div className="flex lg:flex-row flex-col lg:space-x-3 space-y-2 ">
+                        <div className="lg:w-1/2">
                             <input
                                 {...register("title", {
                                     required: "This field is required."
@@ -161,7 +160,7 @@ export default function PostForm () {
                             />
                             {errors.title && errors.title.message && <ErrorMessage message={errors.title.message} />}
                         </div>
-                        <div className="w-1/2">
+                        <div className="lg:w-1/2">
                             <input
                                 {...register("category", {
                                     required: "This field is required."
@@ -173,7 +172,7 @@ export default function PostForm () {
                             {errors.category && errors.category.message && <ErrorMessage message={errors.category.message} />}
                         </div>
                     </div>
-                    <div className="w-1/2">
+                    <div className="lg:w-1/2">
                         <input
                             {...register("image", {
                                 required: "This field is required."

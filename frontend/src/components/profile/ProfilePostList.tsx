@@ -1,4 +1,4 @@
-import { faCheckCircle, faCheckDouble, faPencilAlt, faPlusCircle, faTimesCircle, faTrash, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCheckDouble, faPencilAlt, faPlusCircle, faTimesCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import Pagination from "react-js-pagination";
@@ -101,7 +101,7 @@ export default function ProfilePostList () {
     }
     const buildPosts = (postItems: IPost[]) => {
         return postItems.map(post => {
-            return (<tr className="text-center border-b-2" key={post.id}>
+            return (<tr className="text-center lg:text-sm text-xs border-b-2" key={post.id}>
                 <td className="py-2">{post.id}</td>
                 <td>
                     <Link to="/">
@@ -132,12 +132,12 @@ export default function ProfilePostList () {
     }
 
     return (
-        <div id="accountPanel" className="px-10 py-5">
+        <div id="accountPanel" className="lg:px-10 px-2 py-5">
             <SEOHeader title="Your Posts" description="List of posts created by you." />
             <div className="flex justify-between items-center">
-                <h3 className="text-2xl mb-4 font-bold">Your Posts</h3>
+                <h3 className="lg:text-2xl text-xl mb-4 font-bold">Your Posts</h3>
                 <Link to="/profile/post" className="ml-3">
-                    <FontAwesomeIcon icon={faPlusCircle} className="text-lg" />
+                    <FontAwesomeIcon icon={faPlusCircle} className="lg:text-lg text-sm" />
                 </Link>
             </div>
             <hr className="border-black" />
@@ -146,7 +146,7 @@ export default function ProfilePostList () {
             </div>}
             <table className="table-auto w-full">
                 <thead className="bg-green-500">
-                    <tr className="w-full bg-black text-white">
+                    <tr className="w-full bg-black text-white lg:text-sm text-xs">
                         <th className="py-2">No</th>
                         <th>Title</th>
                         <th>Category</th>

@@ -13,12 +13,12 @@ export default function UserInfo () {
     return (
         <div className='flex-col bg-gray-50 justify-center text-center text-gray-500 pb-3'>
             <div className=" mx-auto text-center pt-4 rounded-full mb-2">
-                <FontAwesomeIcon size={'2x'} icon={faUser} />
+                <FontAwesomeIcon className="lg:text-3xl text-xl" icon={faUser} />
             </div>
-            <p className="font-bold text-2xl mb-2">
+            <p className="font-bold lg:text-2xl text-xl mb-2">
                 {user?.name}
             </p>
-            <p className="text-sm font-bold">
+            <p className="lg:text-sm text-xs font-bold">
                 @{user.username}
             </p>
         </div>

@@ -97,7 +97,7 @@ export default function EditProfile () {
             <p className="mb-3 mt-6 text-gray-500">
                 Edit your profile details.
             </p>
-            <div className="w-1/3">
+            <div className="lg:w-1/3">
                 <div className={`mb-2 ${errorMessage ? 'block' : 'hidden'} duration-300 transition-all`}>
                     {(errorMessage) && <FormError onClick={() => setErrorMessage(null)} message={errorMessage} />}
                 </div>

@@ -39,13 +39,13 @@ export default function Profile () {
     }
 
     return (
-        <div className="p-5 m-10">
+        <div className="lg:p-5 lg:m-10 my-4">
             <SEOHeader title="Profile" description={"Profile details about yourself."} />
-            <div className="flex space-x-5">
-                <div className="w-1/5">
+            <div className="flex flex-col lg:flex-row lg:space-x-5">
+                <div className="lg:w-1/5 w-full lg:mb-0 mb-4">
                     <Sidebar />
                 </div>
-                <div className="w-4/5 shadow-lg bg-white">
+                <div className="lg:w-4/5 w-full shadow-lg bg-white">
                     {getComponent()}
                 </div>
             </div>
