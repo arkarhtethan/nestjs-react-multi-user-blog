@@ -1,7 +1,12 @@
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { deleteAccountService } from "../../service/auth.service";
 import { SolidButton } from "../../shared/button";
 import Modal from "../../shared/Modal";
+import { logout } from "../../store/auth.slice";
 import { SEOHeader } from "../header";
 
 export default function AccountDelete () {
@@ -10,11 +15,25 @@ export default function AccountDelete () {
         setShowModal(true);
     }
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { mutate } = useMutation(deleteAccountService, {
+        onSuccess: ({ ok }) => {
+            if (ok) {
+                dispatch(logout())
+                navigate('/')
+            }
+        },
+    });
+
     const deleteAccount = () => {
+        mutate();
         setShowModal(false);
     }
 
     const [showModal, setShowModal] = useState(false);
+
     return (
         <div id="accountPanel" className="px-10 py-5 text-gray-900">
             <SEOHeader title="Account" description="Your account details." />
