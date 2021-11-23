@@ -35,7 +35,7 @@ export function publishPostService (postId: number) {
 }
 
 export function updatePostService (postId: string, data: IPostUpdateBody) {
-    return axios.patch(`/${PREFIX}/category/${postId}`, data).then(res => res.data);
+    return axios.patch(`/${PREFIX}/${postId}`, data).then(res => res.data);
 }
 
 export function deletePostService (postId: number) {
