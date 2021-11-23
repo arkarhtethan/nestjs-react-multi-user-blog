@@ -11,7 +11,7 @@ export class Comment extends CoreEntity {
     user: User;
 
     @IsString()
-    @MinLength(10)
+    @MinLength(1)
     @Column({ type: String, nullable: false })
     text: string;
 
