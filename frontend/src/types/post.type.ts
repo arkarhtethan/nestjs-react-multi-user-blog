@@ -1,3 +1,4 @@
+import { IComment } from "./comment.type";
 export interface IPostUpdateBody {
     title?: string;
     content?: string;
@@ -32,9 +33,8 @@ export interface IPost {
     user: any;
     category: any;
     createdAt: Date;
-    comments: any;
+    comments: IComment[];
 }
-
 export interface ICategory {
     id: number;
     name: string;
