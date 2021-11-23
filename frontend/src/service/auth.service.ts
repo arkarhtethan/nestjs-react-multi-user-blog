@@ -20,3 +20,6 @@ export function changePasswordService (data: IChangePassword) {
 export function updateProfileService (data: IUpdateProfile) {
     return axios.patch('/user', data).then(res => res.data);
 }
+export function deleteAccountService () {
+    return axios.delete('/user').then(res => res.data);
+}
