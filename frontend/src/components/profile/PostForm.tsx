@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { SubmitButton } from "../../shared/button";
 import { ErrorMessage } from "../../shared/error/FormError";
 import { getErrorMessage } from "../../utils/getErrorMessage";
@@ -8,21 +8,61 @@ import { SEOHeader } from "../header";
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { createPostService } from "../../service/post.service";
+import { createPostService, postsByIdService, updatePostService } from "../../service/post.service";
 import Message from "../../shared/Message";
+import { useNavigate, useParams } from "react-router";
+import { IPost, IPostUpdateBody } from "../../types/post.type";
+import { EditorState, ContentState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
+import { stateToHTML } from "draft-js-export-html";
 
 export default function PostForm () {
 
     const [loading, setLoading] = useState(false);
     const [content, setContent] = useState<any>();
+    const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
+    const [post, setPost] = useState<IPost>();
+    const [isEditing, setisEditing] = useState(false);
+    const navigate = useNavigate();
 
-    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm({
+    const { id } = useParams();
+
+    useEffect(() => {
+        setisEditing(id !== undefined)
+    }, [id])
+
+    const { register, handleSubmit, watch, reset, formState: { errors }, setValue } = useForm({
         mode: "onChange",
     });
 
     const { title, category, summary, published, image } = watch();
 
-    const { mutate } = useMutation(createPostService, {
+    useQuery(['posts-details', id], () => postsByIdService(id), {
+        refetchOnWindowFocus: false,
+        retry: 1,
+        enabled: isEditing,
+        onSuccess: (response) => {
+            if (response.ok) {
+                const post: IPost = response.post;
+                setValue("title", post.title)
+                setValue("summary", post.summary)
+                setValue("image", post.image)
+                setValue("published", post.published)
+                setValue("category", post.category.name)
+                setContent(post.content);
+                setPost(post);
+                const blocksFromHtml = htmlToDraft(post.content);
+                const { contentBlocks, entityMap } = blocksFromHtml;
+                const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+                setEditorState(EditorState.createWithContent(contentState));
+            }
+        },
+        onError: (err: any) => {
+            navigate('/profile/post')
+        }
+    })
+
+    const { mutate: createPostMutate } = useMutation(createPostService, {
         onSuccess: (response) => {
             reset();
             setLoading(false);
@@ -36,38 +76,74 @@ export default function PostForm () {
         }
     });
 
+    const { mutate: updatePostMutate } = useMutation((postData: IPostUpdateBody) => updatePostService(id || "", postData), {
+        onSuccess: (response) => {
+            navigate('/profile/posts')
+        },
+        onError: (error: any) => {
+            setLoading(false);
+            setErrorMessage(getErrorMessage(error))
+        }
+    });
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+    const sameWithPrevState = () => {
+        return (title === post?.title) &&
+            (summary === post?.summary) &&
+            (category === post?.category.name) &&
+            (image === post?.image) &&
+            (published === post?.published) &&
+            (post?.content === stateToHTML(editorState.getCurrentContent()));
+
+    }
+
     const isValid = () => {
-        if (content &&
+        const editorContent = stateToHTML(editorState.getCurrentContent())
+        const isValidEditorContent = (editorContent.length > 7 && !editorContent.includes('<br>'))
+
+        const validationResult = (isValidEditorContent &&
             (title && title.length > 0) &&
             (category && category.length > 0) &&
             (image && image.length > 0) &&
             (summary && summary.length > 0)
-        ) {
-            return draftToHtml(content).length > 8
+        )
+        if (isEditing) {
+            return validationResult && !sameWithPrevState();
         }
-        return false;
-
+        return validationResult;
     }
 
     const onSubmit = () => {
         setLoading(true);
-        mutate({
-            category,
-            content: draftToHtml(content),
-            image,
-            published,
-            summary,
-            title,
-        })
+        if (isEditing && post) {
+            const editorContent = stateToHTML(editorState.getCurrentContent());
+            const updateObj: IPostUpdateBody = ({
+                ...(title !== post?.title && { title }),
+                ...(summary !== post?.summary && { summary }),
+                ...((category !== post?.category.name) && ({ category })),
+                ...((image !== post?.image) && ({ image })),
+                ...((published !== post?.published) && ({ published })),
+                ...((post?.content !== editorContent)) && ({ content: editorContent })
+            });
+            updatePostMutate(updateObj)
+        } else {
+            createPostMutate({
+                category,
+                content: stateToHTML(editorState.getCurrentContent()),
+                image,
+                published,
+                summary,
+                title,
+            })
+        }
     }
 
     return (
         <div id="accountPanel" className="px-10 pt-5 text-gray-900">
             <SEOHeader title="Edit Profile" description="Edit your profile." />
-            <h3 className="text-2xl mb-4 font-bold">Create New Post</h3>
+            <h3 className="text-2xl mb-4 font-bold">{isEditing ? "Update" : "Create New"} Post</h3>
             <hr className="border-black" />
             <div className="mt-6">
                 {errorMessage && <div className="mb-2"><Message variant="red" message={errorMessage} onClick={() => setErrorMessage(null)} /></div>}
@@ -119,11 +195,15 @@ export default function PostForm () {
                         />
                         {errors.summary && errors.summary.message && <ErrorMessage message={errors.summary.message} />}
                     </div>
-                    <div className="border-2    ">
+                    <div className="border-2">
                         <Editor
                             toolbar={{
                                 options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'history'],
                             }}
+                            onEditorStateChange={(data) => {
+                                setEditorState(data)
+                            }}
+                            editorState={editorState}
                             editorClassName="h-64"
                             onChange={data => setContent(data)}
                         />
@@ -140,7 +220,7 @@ export default function PostForm () {
                         </label>
 
                     </div>
-                    <SubmitButton loading={loading} buttonText="Create Post" isValid={isValid()} />
+                    <SubmitButton loading={loading} buttonText={isEditing ? `Update` : `Create`} isValid={isValid()} />
                 </form>
             </div>
         </div>
