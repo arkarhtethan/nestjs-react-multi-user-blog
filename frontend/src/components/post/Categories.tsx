@@ -42,7 +42,7 @@ export default function Categories () {
             <h3 className="mb-4 font-bold border-b-2 border-black">Categories</h3>
             <div className="flex flex-wrap">
                 {categories.map(category => {
-                    return <CategoryItem key={category.slug} category={category} />
+                    return <CategoryItem key={category.id} category={category} />
                 })}
             </div>
         </div>
