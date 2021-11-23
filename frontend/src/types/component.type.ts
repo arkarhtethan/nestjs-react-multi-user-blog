@@ -14,6 +14,7 @@ export interface ISubmitButtonProps {
     loading: boolean;
     isValid: boolean;
     buttonText: string;
+    classes?: string;
 }
 
 export interface ISpinnerProps {
