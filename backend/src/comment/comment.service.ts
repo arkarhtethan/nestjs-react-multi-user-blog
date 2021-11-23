@@ -6,7 +6,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetCommentOutput } from './dto/get-comment.dto';
-import { GetCommentsByPostIdOutput } from './dto/get-comments-by-post.dto';
+import { GetCommentsByPostIdDto, GetCommentsByPostIdOutput } from './dto/get-comments-by-post.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comment } from './entities/comment.entity';
 
@@ -49,13 +49,13 @@ export class CommentService {
     }
   }
 
-  async commentByPostId (postId: number): Promise<GetCommentsByPostIdOutput> {
+  async commentByPostId (postId: number, { limit = 10, pageNumber = 1, }: GetCommentsByPostIdDto): Promise<GetCommentsByPostIdOutput> {
     try {
-      const post = await this.postRepository.findOne({ id: postId })
+      const post = await this.postRepository.findOne({ where: { id: postId } })
       if (!post) {
         throw new HttpException('Post not found.', HttpStatus.NOT_FOUND)
       }
-      const comments = await this.commentRepository.find({ where: { post, parent: null }, relations: ['parent', 'children'] })
+      const comments = await this.commentRepository.find({ where: { post, parent: null }, relations: ['user'], order: { createdAt: "DESC" } })
       return {
         ok: true,
         comments,
@@ -73,7 +73,7 @@ export class CommentService {
 
   async findOne (id: number): Promise<GetCommentOutput> {
     try {
-      const comment = await this.commentRepository.findOne({ id }, { relations: ['children'] });
+      const comment = await this.commentRepository.findOne({ id });
       if (!comment) {
         throw new HttpException("Comment not found.", HttpStatus.NOT_FOUND)
       }

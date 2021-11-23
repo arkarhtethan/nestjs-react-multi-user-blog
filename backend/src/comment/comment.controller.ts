@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { AuthUser } from 'src/auth/auth-user.decorator';
 import { Role } from 'src/auth/role.decorator';
 import { CoreOutput } from 'src/common/dtos/core.output';
@@ -6,6 +6,7 @@ import { User } from 'src/user/entities/user.entity';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { GetCommentOutput } from './dto/get-comment.dto';
+import { GetCommentsByPostIdDto } from './dto/get-comments-by-post.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
 @Controller('comment')
@@ -19,8 +20,8 @@ export class CommentController {
   }
 
   @Get('post/:id')
-  commentByPostId (@Param('id') id: string) {
-    return this.commentService.commentByPostId(+id);
+  commentByPostId (@Param('id') id: string, @Query() getCommentsByPostIdDto: GetCommentsByPostIdDto) {
+    return this.commentService.commentByPostId(+id, getCommentsByPostIdDto);
   }
 
   @Get(':id')
