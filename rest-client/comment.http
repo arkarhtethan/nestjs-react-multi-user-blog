@@ -12,68 +12,49 @@ POST http://{{host}}/user/login
 Content-Type: {{contentType}}
 
 {
-    "email":"arkarhtethan@gmail.com",
-    "password":"111112"
+    "email":"kaung@gmail.com",
+    "password":"111111"
 }
 
 ### -----------------------------------------------------------
 
-# @name register
-POST http://{{host}}/user/register
-Content-Type: {{contentType}}
-
-{
-    "email":"thiha@gmail.com",
-    "password":"111111",
-    "name":"Min Thiha"
-}
-
-### -----------------------------------------------------------
-
-# @name update
-PATCH http://{{host}}/user/
+# @name addComment
+POST http://{{host}}/comment/
 Content-Type: {{contentType}}
 x-jwt: {{token}}
 
 {
-    "bio":"A passionate programmer."
+    "postId":33,
+    "text":"hote loh lar by kaung"
 }
 
 ### -----------------------------------------------------------
 
-# @name changePassword
-PATCH http://{{host}}/user/change-password
+# @name getComment
+GET http://{{host}}/comment/33
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name getCommentByPostId
+GET http://{{host}}/comment/post/33
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name updateComment
+PATCH  http://{{host}}/comment/5
 Content-Type: {{contentType}}
 x-jwt: {{token}}
 
 {
-    "oldPassword":"111111",
-    "newPassword":"222222"
+    "text":"comment updated by arkar"
 }
-
 ### -----------------------------------------------------------
 
-# @name profile
-GET http://{{host}}/user/profile
+# @name deleteCommentById
+DELETE   http://{{host}}/comment/1
 Content-Type: {{contentType}}
 x-jwt: {{token}}
-
-### -----------------------------------------------------------
-
-# @name users
-GET http://{{host}}/user/
-Content-Type: {{contentType}}
-x-jwt: {{token}}
-
-### -----------------------------------------------------------
-
-# @name userById
-GET http://{{host}}/user/1
-Content-Type: {{contentType}}
-x-jwt: {{token}}
-
-### -----------------------------------------------------------
-
-# @name confirmEmail
-GET http://{{host}}/user/confirm/b4396235-0ad9-4d6a-9b3b-0b3cf2464c971636541091083
-Content-Type: {{contentType}}

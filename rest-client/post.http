@@ -1,0 +1,93 @@
+
+@hostname = localhost
+@port = 4000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@token = {{login.response.body.token}}
+
+### -----------------------------------------------------------
+
+# @name login
+POST http://{{host}}/user/login
+Content-Type: {{contentType}}
+
+{
+    "email":"kaung@gmail.com",
+    "password":"111111"
+}
+
+### -----------------------------------------------------------
+
+# @name createPost
+POST http://{{host}}/post
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+{
+    "category":"React",
+    "published":false,
+    "title":"Learning React",
+    "summary":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "image":"https://dev-to-uploads.s3.amazonaws.com/uploads/articles/q4no7ov5d95xyq6f9ry1.png",
+    "content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultricies odio sed magna blandit ultricies. In placerat sapien id gravida vulputate. Morbi tempus id felis quis commodo. Ut finibus est odio, scelerisque tincidunt nisi pharetra et. In et tellus elit. Morbi ut volutpat lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse justo eros, bibendum facilisis ultricies vel, tempor eget lacus. Nunc quam odio, efficitur sed ex aliquet, gravida mollis neque. Integer non venenatis elit, vel consectetur tellus. Pellentesque eu accumsan velit. Nunc nulla dui, tristique at nisi a, porta blandit ante. Mauris at metus dictum, posuere libero a, finibus magna. Suspendisse accumsan justo justo, eu tincidunt leo condimentum eget. Quisque ipsum diam, fringilla sit amet convallis at, laoreet quis sapien.Vivamus vitae sagittis felis, non feugiat magna. Phasellus fringilla felis et erat efficitur bibendum. Praesent mattis, nibh id accumsan semper, lacus magna mattis orci, ac rutrum diam leo vel velit. Nulla accumsan lacus nisi, id accumsan erat consequat nec. Vivamus rutrum velit commodo ipsum tincidunt pellentesque. Etiam eros lectus, aliquet sed aliquam a, imperdiet ut massa. Curabitur nec augue a orci pulvinar sollicitudin.Proin in lobortis dui. Nam tortor orci, molestie euismod iaculis a, efficitur in lectus. Aliquam consectetur imperdiet massa ac blandit. Integer eu mi sit amet justo tincidunt consectetur. Proin at felis quis nunc pellentesque euismod. Morbi tempus condimentum nisl, ut efficitur ex accumsan eu. Sed ornare faucibus pretium. Maecenas maximus turpis et lacus venenatis aliquet. Curabitur dui arcu, interdum et cursus sit amet, sodales sit amet lacus. Morbi posuere dignissim lorem ac finibus.Sed vitae tellus lorem. Donec non diam nunc. Suspendisse at ligula vel nisi ultrices euismod. Pellentesque consequat dignissim felis, dignissim ultricies velit mollis ac. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla placerat erat et augue ultrices, sit amet finibus neque fermentum. Morbi condimentum pretium arcu, ac gravida lectus efficitur vel. Suspendisse at quam ultricies, viverra lacus eget, congue dolor. Vivamus congue pretium lorem at dapibus. Aliquam posuere nibh fringilla, porttitor sem eu, sagittis tortor. Suspendisse orci tortor, congue imperdiet ullamcorper ac, interdum sed nunc. Suspendisse ultricies, diam eu vehicula rutrum, dui arcu lobortis sapien, ac sollicitudin diam dolor id dolor. Nam laoreet id eros vel porttitor.Cras eget elit vel sapien eleifend fermentum. Donec tincidunt condimentum nunc eget scelerisque. Sed nisl mauris, commodo id ultrices in, ultrices eget leo. Duis pharetra, ex at congue ultrices, tortor nisl tempus sem, vel blandit massa felis sed sapien. Morbi ullamcorper, sem vel fermentum faucibus, tortor eros rhoncus ipsum, eu pulvinar ante neque eget diam. Vivamus molestie arcu risus, in interdum nunc pellentesque id. Cras consectetur, nisi ac varius hendrerit, leo enim imperdiet justo, a congue purus mi aliquam felis. Sed et maximus magna, a euismod justo. Praesent sed orci massa. Suspendisse ac ante pharetra nibh feugiat lobortis sed vel arcu. Sed dictum iaculis nibh sed laoreet. Morbi suscipit, orci non efficitur hendrerit, lacus quam semper est, volutpat eleifend mauris nisl sed arcu. Suspendisse suscipit lorem at erat finibus, at ullamcorper odio cursus. Curabitur at mi tincidunt, porta massa quis, aliquam magna. Pellentesque cursus orci quis imperdiet venenatis. Nulla eleifend ac elit ut lobortis."
+}
+
+### -----------------------------------------------------------
+
+# @name getPosts
+GET http://{{host}}/post?pageNumber=2&limit=20
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name getPost
+GET http://{{host}}/post/21
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name getPostByCategory
+GET http://{{host}}/post/category/programming?pageNumber=1
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name getPostByUser
+GET http://{{host}}/post/user/minthiha1636459642418
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name myPost
+GET http://{{host}}/post/myPost
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name myPost
+DELETE  http://{{host}}/post/34
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name publish
+PATCH   http://{{host}}/post/publish/35
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+### -----------------------------------------------------------
+
+# @name update
+PATCH   http://{{host}}/post/35
+Content-Type: {{contentType}}
+x-jwt: {{token}}
+
+{
+    "title":"Learning Tailwind CSS"
+}
