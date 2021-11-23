@@ -57,6 +57,7 @@ function App () {
           <Route path="/category/:slug" element={<PostsByCategory />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:slug" element={<Profile />} />
+          <Route path="/profile/:slug/:id" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/:id" element={<PostDetail />} />
