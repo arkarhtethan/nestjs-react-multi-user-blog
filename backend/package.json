@@ -90,6 +90,7 @@
       ".constants.ts",
       ".dto.ts",
       ".module.ts",
+      ".stub.ts",
       ".output.ts"
     ]
   }
