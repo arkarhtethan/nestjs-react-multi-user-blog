@@ -1,17 +1,13 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { createCommentService } from "../../service/comment.service";
 import { SubmitButton } from "../../shared/button";
-import { getErrorMessage } from "../../utils/getErrorMessage";
 interface ICommentFormProps {
     postId: number;
     callback: (content: string) => void;
 }
 
 export default function CommentForm ({ postId, callback }: ICommentFormProps) {
-
-    const [errorMessage, setErrorMessage] = useState(null);
 
     const { register, watch, handleSubmit, reset } = useForm({ mode: 'onChange' });
 
@@ -24,9 +20,6 @@ export default function CommentForm ({ postId, callback }: ICommentFormProps) {
                 reset();
             }
         },
-        onError: (error) => {
-            setErrorMessage(getErrorMessage(error))
-        }
     });
 
     const isValid = () => {

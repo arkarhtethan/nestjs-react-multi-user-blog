@@ -34,7 +34,7 @@ export default function PostDetail () {
         }
     })
 
-    const { isLoading: isCommmentLoading } = useQuery(['comments', id], () => getCommentsByPostIdService(id ? +id : 1), {
+    useQuery(['comments', id], () => getCommentsByPostIdService(id ? +id : 1), {
         refetchOnWindowFocus: false,
         onSuccess: (response) => {
             if (response.ok) {
