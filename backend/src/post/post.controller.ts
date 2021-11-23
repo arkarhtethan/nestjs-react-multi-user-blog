@@ -75,7 +75,7 @@ export class PostController {
   }
 
   @Patch(':id')
-  @Role(['User'])
+  @Role(['User', 'Admin'])
   update (
     @AuthUser() user: User,
     @Param('id') id: string,
