@@ -98,7 +98,7 @@ export default function PostDetail () {
                     </div>
                 </div>
                 <div className="mt-4 lg:mb-0 mb-2">
-                    <CommentForm postId={post.id} callback={afterCreateCallback} />
+                    {user && <CommentForm postId={post.id} callback={afterCreateCallback} />}
                     <Comments comments={comments} onDelete={deleteCallback} />
                 </div>
             </div>
