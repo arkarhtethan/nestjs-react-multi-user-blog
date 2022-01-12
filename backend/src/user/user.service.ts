@@ -27,9 +27,9 @@ export class UserService {
 
   async register (createUserDto: CreateUserDto): Promise<CreateUserOutput> {
     try {
-      const user = await this.usersRepository.create(createUserDto);
+      const user = await this.usersRepository.create({ ...createUserDto, verified: true });
       await this.usersRepository.save(user);
-      await this.verificationRepository.save(this.verificationRepository.create({ user }));
+      // await this.verificationRepository.save(this.verificationRepository.create({ user }));
       //  send email here
       return {
         ok: true,
@@ -110,7 +110,7 @@ export class UserService {
     }
   }
 
-  async update ({ name, email,bio }: UpdateUserDto, authUser: User): Promise<UpdateUserOutput> {
+  async update ({ name, email, bio }: UpdateUserDto, authUser: User): Promise<UpdateUserOutput> {
     try {
       const { id } = authUser;
       let user = await this.usersRepository.findOne({ id });
