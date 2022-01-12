@@ -147,8 +147,8 @@ export default function PostForm () {
             <div className="mt-6">
                 {errorMessage && <div className="mb-2"><Message variant="red" message={errorMessage} onClick={() => setErrorMessage(null)} /></div>}
                 {successMessage && <div className="mb-2"><Message variant="green" message={successMessage} onClick={() => setSuccessMessage(null)} /></div>}
-                <form action="" className="flex flex-col pb-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex lg:flex-row flex-col lg:space-x-3 space-y-2 ">
+                <form action="" className="flex flex-col pb-8 space-y-2 " onSubmit={handleSubmit(onSubmit)}>
+                    <div className="flex lg:flex-row flex-col lg:space-x-3 lg:space-y-0 space-y-2 ">
                         <div className="lg:w-1/2">
                             <input
                                 {...register("title", {
