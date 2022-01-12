@@ -4,15 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from './jwt/jwt.module';
-import { Category } from './post/entities/category.entity';
-import { Post } from './post/entities/post.entity';
 import { PostModule } from './post/post.module';
-import { User } from './user/entities/user.entity';
-import { Verification } from './user/entities/verification.entity';
 import { UserModule } from './user/user.module';
-import { SearchModule } from './search/search.module';
 import { CommentModule } from './comment/comment.module';
-import { Comment } from './comment/entities/comment.entity';
 
 @Module({
   imports: [
@@ -33,16 +27,17 @@ import { Comment } from './comment/entities/comment.entity';
         ELASTICSEARCH_INDEX: Joi.string().required(),
       }),
     }),
-    TypeOrmModule.forRoot({
-      logging: true,
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: [User, Verification, Post, Category, Comment],
-      synchronize: true,
-    }),
+    // TypeOrmModule.forRoot({
+    //   logging: true,
+    //   type: 'postgres',
+    //   host: process.env.DB_HOST,
+    //   username: process.env.DB_USERNAME,
+    //   password: process.env.DB_PASSWORD,
+    //   database: process.env.DB_NAME,
+    //   entities: [User, Verification, Post, Category, Comment],
+    //   synchronize: true,
+    // }),
+    TypeOrmModule.forRoot(),
     UserModule,
     PostModule,
     JwtModule.forRoot({ privateKey: process.env.PRIVATE_KEY }),
