@@ -72,14 +72,18 @@ export class PostService {
       const totalPosts = await this.postRepository.count({ where: { published: true } });
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {
-        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+        pageNumber = totalPages;
+      }
+      let skip = 0;
+      if ((pageNumber * limit - limit) > 0) {
+        skip = (pageNumber * limit - limit);
       }
       const posts = await this.postRepository.find({
         order: {
           id: "DESC"
         },
         take: limit,
-        skip: (pageNumber * limit - limit),
+        skip,
         relations: ['category', 'user'],
         where: {
           published: true,
@@ -111,7 +115,7 @@ export class PostService {
       const totalPosts = await this.postRepository.count({ user });
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {
-        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+        pageNumber = totalPages;
       }
       const posts = await this.postRepository.find({
         order: {
@@ -240,7 +244,7 @@ export class PostService {
       const totalPosts = await this.postRepository.count({ where: { user: user, published: true } });
       const totalPages = Math.ceil(totalPosts / limit);
       if (pageNumber > totalPages) {
-        throw new HttpException('Page index out of bound.', HttpStatus.BAD_REQUEST)
+        pageNumber = totalPages;
       }
       const posts = await this.postRepository.find({
         where: { user, published: true },
