@@ -81,6 +81,7 @@ export default function PostDetail () {
                         {post.title}
                     </h3>
                     <div className="bg-red-300" style={{ height: "300px" }}>
+                        <img src={post.image} alt={post.title} className="h-full bg-contain w-full" />
                     </div>
                     <div className="flex my-3 space-x-4">
                         <div className="space-x-2 font-bold text-sm flex">
