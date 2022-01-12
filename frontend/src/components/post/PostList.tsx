@@ -45,7 +45,7 @@ export default function PostList ({
     }
 
     const buildPostList = () => {
-        return <div className="space-y-4">
+        return <div className="space-y-4 lg:space-y-4 md:space-y-0 lg:space-x-0 md:space-x-3 flex lg:flex-col md:flex-row flex-col">
             {posts?.map(post => <PostItem key={post.id} post={post} />)}
         </div>
     }
@@ -60,8 +60,8 @@ export default function PostList ({
 
 
     return (
-        <div className="lg:w-4/5 space-x-3 mx-auto flex lg:flex-row flex-col mt-4">
-            <div className="lg:w-3/4 lg:mx-0 mx-3">
+        <div className="md:w-11/12 lg:w-4/5 lg:space-x-3 space-x-0 mx-auto flex lg:flex-row flex-col mt-4">
+            <div className="lg:w-3/4 w-full lg:mx-0">
                 {posts && buildPostList()}
                 {posts && <div className="lg:my-24 my-12">
                     <Pagination

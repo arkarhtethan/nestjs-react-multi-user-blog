@@ -17,23 +17,25 @@ export default function PostItem ({ post }: IPostItemProps) {
         navigate(`/${post.id}`)
     }
     return (
-        <div className="shadow-lg bg-white" style={{ height: isDesktop ? "auto" : "auto" }}>
+        <div className="w-full shadow-lg bg-white" style={{ height: isDesktop ? "auto" : "auto" }}>
             <div className="flex flex-col lg:flex-row">
-                <div className="lg:w-1/3 w-full bg-red-500" style={{ height: isDesktop ? "auto" : "200px" }}>
-                    iamge
+                <div className="lg:w-1/3 w-full" style={{ height: isDesktop ? "200px" : "200px" }}>
+                    <img src={post.image} alt={post.title} className="bg-cover h-full w-full" />
                 </div>
-                <div className="lg:w-2/3 w-full p-3">
-                    <h2 className="font-bold text-xl">
-                        <Link to={`/${post.id}`}>{post.title}</Link>
-                    </h2>
-                    <div className="flex text-xs mt-1 space-x-3 text-gray-600">
-                        <p><FontAwesomeIcon icon={faUser} size={'sm'} /> <Link to={`/user/${post.user.username}`}>{post.user.name}</Link></p>
-                        <p><FontAwesomeIcon icon={faCalendar} size={'sm'} /> {format(post.createdAt)}</p>
+                <div className="lg:w-2/3 w-full p-3 flex flex-col justify-between items-start">
+                    <div>
+                        <h2 className="font-bold text-xl">
+                            <Link to={`/${post.id}`}>{post.title}</Link>
+                        </h2>
+                        <div className="flex text-xs mt-1 space-x-3 text-gray-600">
+                            <p><FontAwesomeIcon icon={faUser} size={'sm'} /> <Link to={`/user/${post.user.username}`}>{post.user.name}</Link></p>
+                            <p><FontAwesomeIcon icon={faCalendar} size={'sm'} /> {format(post.createdAt)}</p>
+                        </div>
+                        <p className="mt-3">
+                            {post.summary.substr(0, isDesktop ? 280 : 150)}...
+                        </p>
                     </div>
-                    <p className="mt-3">
-                        {post.summary.substr(0, isDesktop ? 280 : 150)}...
-                    </p>
-                    <SolidButton classes="px-2 mt-3 text-sm" text="Read More" onClick={navigateToDetails} />
+                    <SolidButton classes="px-2 w-fit mt-3 text-sm" text="Read More" onClick={navigateToDetails} />
                 </div>
             </div>
         </div >
