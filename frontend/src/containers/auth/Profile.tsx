@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { SEOHeader } from "../../components/header";
-import { Dashboard, EditProfile, PostForm, ProfilePostList, Sidebar } from "../../components/profile";
+import { EditProfile, PostForm, ProfilePostList, Sidebar } from "../../components/profile";
 import AccountDelete from "../../components/profile/AccountDelete";
 import ChangePassword from "../../components/profile/ChangePassword";
 import { RootState } from "../../store";
@@ -18,7 +18,7 @@ export default function Profile () {
     const ComponentDict = [
         {
             key: "",
-            component: <Dashboard />,
+            component: <EditProfile />,
         },
         {
             key: "edit-profile",
