@@ -42,7 +42,7 @@ export default function Sidebar () {
             </div>
             <div className={`${showNav ? "block" : "hidden"} flex-col lg:space-y-2 shadow-md`}>
                 <div className="bg-gray-100 lg:mt-2 shadow-lg">
-                    <SidebarNavItem url="/profile" icon={faChartBar} title={"Dashboard"} />
+                    {/* <SidebarNavItem url="/profile" icon={faChartBar} title={"Dashboard"} /> */}
                     <SidebarNavItem url="/profile/posts" icon={faAlignJustify} title={"Your Posts"} />
                 </div>
                 <div className="bg-gray-100 lg:mt-2 shadow-lg">
