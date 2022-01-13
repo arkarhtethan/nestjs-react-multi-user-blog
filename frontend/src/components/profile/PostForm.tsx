@@ -18,7 +18,7 @@ import { stateToHTML } from "draft-js-export-html";
 export default function PostForm () {
 
     const [loading, setLoading] = useState(false);
-    const [content, setContent] = useState<any>();
+    const [, setContent] = useState<any>();
     const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
     const [post, setPost] = useState<IPost>();
     const [isEditing, setisEditing] = useState(false);

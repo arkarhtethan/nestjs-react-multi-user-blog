@@ -23,6 +23,7 @@ export default function Sidebar () {
         } else if (isDesktop) {
             setShowNav(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDesktop])
 
     const logoutHandler = () => {
