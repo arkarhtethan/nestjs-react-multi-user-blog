@@ -21,6 +21,10 @@ Simple multi user blog app created using nestjs and reactjs.
 - Tailwind
 - Postgres
 
+## Deployment
+- Heroku
+- Netlify
+
 ## Setup
 To run this project, install it locally using yarn:
 
