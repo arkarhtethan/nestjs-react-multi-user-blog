@@ -44,6 +44,12 @@ switch (process.env.NODE_ENV) {
             database: process.env.DATABASE_NAME,
             entities: ['**/*.entity.js'],
             synchronize: false,
+            ssl: true,
+            extra: {
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            }
         })
         break;
     default:
