@@ -11,10 +11,11 @@ switch (process.env.NODE_ENV) {
         Object.assign(dbConfig, {
             logging: true,
             type: 'postgres',
-            host: 'localhost',
-            username: 'root',
-            password: 'root',
-            database: 'multiuserblog',
+            port: process.env.DB_PORT,
+            host: process.env.DB_HOST,
+            username: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
             entities: ['**/*.entity.js'],
             synchronize: false,
         })
@@ -24,10 +25,11 @@ switch (process.env.NODE_ENV) {
         Object.assign(dbConfig, {
             logging: true,
             type: 'postgres',
-            host: 'localhost',
-            username: 'root',
-            password: 'root',
-            database: 'testmultiuserblog',
+            port: process.env.DATABASE_PORT,
+            host: process.env.DATABASE_HOST,
+            username: process.env.DATABASE_USERNAME,
+            password: process.env.DATABASE_PASSWORD,
+            database: process.env.DATABASE_NAME,
             entities: ['**/*.entity.ts'],
             synchronize: false,
         })
