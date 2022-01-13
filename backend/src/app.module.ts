@@ -23,8 +23,6 @@ import { CommentModule } from './comment/comment.module';
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
-        ELASTIC_NODE: Joi.string().required(),
-        ELASTICSEARCH_INDEX: Joi.string().required(),
       }),
     }),
     // TypeOrmModule.forRoot({
