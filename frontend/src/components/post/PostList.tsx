@@ -49,7 +49,6 @@ export default function PostList ({
             {posts?.map(post => <PostItem key={post.id} post={post} />)}
         </div>
     }
-
     if (isLoading) {
         return buidLoading();
     }
