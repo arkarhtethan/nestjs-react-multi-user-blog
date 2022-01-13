@@ -1,4 +1,4 @@
-import { faCaretUp, faCaretDown, faAlignJustify, faChartBar, faReply, faUserCog, faUserEdit, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp, faCaretDown, faAlignJustify, faReply, faUserCog, faUserEdit, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
